@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { StyledImage } from "./StyledImage";
+import { StyledImage } from "../StyledImage/StyledImage";
 
 const Article = styled.article`
   border: 1px solid black;
@@ -22,14 +22,14 @@ const Figure = styled.figure`
   line-height: 0.2rem;
 `;
 
-export default function Card({ name, image, location, id }) {
+export default function Card({ title, imageUrl, id }) {
   return (
     <Article>
-      <Link href={`places/${id}`}>
+      <Link href={`remedies/${id}`}>
         <Figure>
           <ImageContainer>
             <StyledImage
-              src={image}
+              src={imageUrl}
               fill
               sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
@@ -38,9 +38,8 @@ export default function Card({ name, image, location, id }) {
             />
           </ImageContainer>
           <figcaption>
-            <strong>{name}</strong>
+            <strong>{title}</strong>
           </figcaption>
-          <p>{location}</p>
         </Figure>
       </Link>
     </Article>
