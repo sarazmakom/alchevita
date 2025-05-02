@@ -1,11 +1,15 @@
 import dbConnect from "@/db/connect";
 import { Remedy } from "@/db/models/Remedy";
+import { Symptom } from "@/db/models/Symptom";
 
 export default async function handler(req, res) {
   await dbConnect();
   if (req.method === "GET") {
     try {
-      const remedies = await Remedy.find();
+      const remedies = await Remedy.find().populate({
+        path: "symptoms",
+        model: Symptom, // Explicitly state the model
+      });
       return res.status(200).json(remedies);
     } catch (error) {
       return res.status(400).json({
@@ -13,7 +17,5 @@ export default async function handler(req, res) {
       });
     }
   }
-  res.status(405).json({
-    status: "method not allowed!",
-  });
+  res.status(405).json({ status: "method not allowed!" });
 }
