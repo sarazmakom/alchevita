@@ -12,6 +12,6 @@ const Headline = styled.h1`
   z-index: 1;
 `;
 
-export default function TitleBar() {
-  return <Headline>Alchevita</Headline>;
+export default function TitleBar({ title }) {
+  return <Headline>title</Headline>;
 }

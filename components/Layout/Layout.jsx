@@ -1,4 +1,3 @@
-import TitleBar from "./TitleBar";
 import styled from "styled-components";
 import Head from "next/head";
 
@@ -17,7 +16,6 @@ export default function Layout({ children }) {
       <Head>
         <title>Tourio</title>
       </Head>
-      <TitleBar />
       <Main>{children}</Main>
     </>
   );
