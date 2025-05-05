@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { StyledImage } from "../StyledImage/StyledImage";
 import SymptomsList from "../SymptomsList/SymptomsList";
 
-const Article = styled.article`
+const CardContainer = styled.div`
   border: 1px solid black;
   border-radius: 0.8rem;
   padding: 0.5rem;
@@ -15,35 +15,21 @@ const ImageContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const Figure = styled.figure`
-  color: black;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  line-height: 0.2rem;
-`;
-
 export default function Card({ title, imageUrl, id, symptoms }) {
   return (
-    <Article>
-      <Link href={`remedies/${id}`}>
-        <Figure>
-          <ImageContainer>
-            <StyledImage
-              src={imageUrl}
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-              alt=""
-            />
-          </ImageContainer>
-        </Figure>
+    <CardContainer>
+      <Link href={`remedies/${id}`} aria-label={`View details for ${title}`}>
+        <ImageContainer>
+          <StyledImage
+            src={imageUrl}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt={`Visual representation of ${title}`}
+          />
+        </ImageContainer>
       </Link>
-      <figcaption>
-        <strong>{title}</strong>
-      </figcaption>
+      <h3>{title}</h3>
       <SymptomsList symptoms={symptoms} />
-    </Article>
+    </CardContainer>
   );
 }

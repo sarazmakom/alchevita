@@ -1,62 +1,53 @@
 import styled from "styled-components";
 import Card from "../Card/Card";
 
-const StyledCardListContainer = styled.div`
+const StyledSection = styled.section`
   padding: 2.5rem 1.5rem 1.5rem;
 `;
 
-const StyledGridContainer = styled.div`
+const StyledGrid = styled.ul`
   display: grid;
-  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
   gap: 2.5rem 1.5rem;
-  position: relative;
+  grid-template-columns: 1fr;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (min-width: 1280px) {
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 2rem;
   }
 `;
 
-const StyledEmptyContainer = styled.div`
-  max-width: 100%;
-  padding: 2rem 1rem;
-  margin: 0 auto;
-
-  p {
-    margin: 0;
-    font-size: 1rem;
-    color: #666;
-  }
+const EmptyMessage = styled.p`
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
 `;
 
 export default function CardList({ elements = [] }) {
   return (
-    <StyledCardListContainer>
-      <StyledGridContainer>
-        {elements.length === 0 ? (
-          <StyledEmptyContainer>
-            <p>No remedies available.</p>
-          </StyledEmptyContainer>
-        ) : (
-          elements.map((element) => (
+    <StyledSection>
+      {elements.length === 0 ? (
+        <EmptyMessage>No remedies available.</EmptyMessage>
+      ) : (
+        <StyledGrid>
+          {elements.map((element) => (
             <Card
               key={element._id}
+              as="li"
               title={element.title}
               imageUrl={element.imageUrl}
               id={element._id}
               symptoms={element.symptoms}
             />
-          ))
-        )}
-      </StyledGridContainer>
-    </StyledCardListContainer>
+          ))}
+        </StyledGrid>
+      )}
+    </StyledSection>
   );
 }
