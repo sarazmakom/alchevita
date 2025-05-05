@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import Image from "next/image";
 
 const Container = styled.div`
   width: 100%;
@@ -113,14 +114,20 @@ export default function DetailPage({ element }) {
       <FlexContainer>
         <Column width="50%">
           <ImageContainer>
-            <img src={element.imageUrl} alt={element.name} loading="lazy" />
+            <Image
+              src={element.imageUrl}
+              alt={element.name}
+              loading="lazy"
+              width={500}
+              height={500}
+            />
           </ImageContainer>
         </Column>
 
         <Column width="50%">
-          <Title>{element.name}</Title>
-          <RemedyText>{`Artist: ${element.artist}`}</RemedyText>
-          <RemedyText>{`Year: ${element.year}`}</RemedyText>
+          <Title>{element.title}</Title>
+          <RemedyText>{`Artist: ${element.usage}`}</RemedyText>
+          <RemedyText>{`Year: ${element.preparation}`}</RemedyText>
           <RemedyText>{`Genre: ${element.genre}`}</RemedyText>
         </Column>
       </FlexContainer>
