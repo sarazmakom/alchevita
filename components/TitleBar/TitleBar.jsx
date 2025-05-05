@@ -13,5 +13,5 @@ const Headline = styled.h1`
 `;
 
 export default function TitleBar({ title }) {
-  return <Headline>title</Headline>;
+  return <Headline>{title}</Headline>;
 }

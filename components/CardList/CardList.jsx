@@ -52,6 +52,7 @@ export default function CardList({ elements = [] }) {
               title={element.title}
               imageUrl={element.imageUrl}
               id={element._id}
+              symptoms={element.symptoms}
             />
           ))
         )}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { StyledImage } from "../StyledImage/StyledImage";
+import SymptomsList from "../SymptomsList/SymptomsList";
 
 const Article = styled.article`
   border: 1px solid black;
@@ -22,7 +23,7 @@ const Figure = styled.figure`
   line-height: 0.2rem;
 `;
 
-export default function Card({ title, imageUrl, id }) {
+export default function Card({ title, imageUrl, id, symptoms }) {
   return (
     <Article>
       <Link href={`remedies/${id}`}>
@@ -37,11 +38,12 @@ export default function Card({ title, imageUrl, id }) {
               alt=""
             />
           </ImageContainer>
-          <figcaption>
-            <strong>{title}</strong>
-          </figcaption>
         </Figure>
       </Link>
+      <figcaption>
+        <strong>{title}</strong>
+      </figcaption>
+      <SymptomsList symptoms={symptoms} />
     </Article>
   );
 }
