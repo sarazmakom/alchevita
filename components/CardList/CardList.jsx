@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Card from "../Card/Card";
 
-const StyledSection = styled.section`
+const StyledMain = styled.main`
   padding: 2.5rem 1.5rem 1.5rem;
 `;
 
@@ -31,7 +31,7 @@ const EmptyMessage = styled.p`
 
 export default function CardList({ elements = [] }) {
   return (
-    <StyledSection>
+    <StyledMain>
       {elements.length === 0 ? (
         <EmptyMessage>No remedies available.</EmptyMessage>
       ) : (
@@ -48,6 +48,6 @@ export default function CardList({ elements = [] }) {
           ))}
         </StyledGrid>
       )}
-    </StyledSection>
+    </StyledMain>
   );
 }

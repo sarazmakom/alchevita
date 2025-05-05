@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { StyledImage } from "../StyledImage/StyledImage";
 import SymptomsList from "../SymptomsList/SymptomsList";
 
-const CardContainer = styled.div`
+const CardContainer = styled.li`
   border: 1px solid black;
   border-radius: 0.8rem;
   padding: 0.5rem;
