@@ -4,9 +4,19 @@ import { Symptom } from "@/db/models/Symptom";
 
 export default async function handler(req, res) {
   await dbConnect();
+  ///////////////////
+  const {
+    method,
+    query: { symptom },
+  } = req;
+  //////////////////
   if (req.method === "GET") {
     try {
-      const remedies = await Remedy.find().populate({
+      /////////////////////////////////////////////////////
+      const filter = symptom ? { symptoms: symptom } : {};
+      /////////////////////////////////////////////////////
+
+      const remedies = await Remedy.find(filter).populate({
         path: "symptoms",
         model: Symptom, // Explicitly state the model
       });

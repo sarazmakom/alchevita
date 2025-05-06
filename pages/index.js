@@ -1,25 +1,76 @@
 import useSWR from "swr";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import CardList from "@/components/CardList/CardList";
 import TitleBar from "@/components/TitleBar/TitleBar";
+import styled from "styled-components";
+import RemedyFilter from "@/components/RemedyFilter/RemedyFilter";
+
+const EmptyMessage = styled.p`
+  margin: 2rem 0;
+  text-align: center;
+  color: #666;
+`;
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const { data, isLoading, error } = useSWR("/api/remedies", {
-    fallbackData: [],
-  });
+  const router = useRouter();
+  const { symptom: initialSymptom } = router.query;
+  const [selectedSymptom, setSelectedSymptom] = useState("");
 
-  if (isLoading) {
-    return <TitleBar title="Loading..." />;
-  }
+  useEffect(() => {
+    if (initialSymptom) {
+      setSelectedSymptom(initialSymptom);
+    }
+  }, [initialSymptom]);
 
-  if (error) {
-    console.error("Error while fetching index page:", error);
-    return <TitleBar title="Internal Server Error!" />;
-  }
+  const handleSelect = (symptomId) => {
+    setSelectedSymptom(symptomId);
+    router.push(
+      {
+        pathname: "/",
+        query: symptomId ? { symptom: symptomId } : {},
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  const handleClear = () => {
+    setSelectedSymptom("");
+    router.push({ pathname: "/", query: {} }, undefined, { shallow: true });
+  };
+
+  const {
+    data: remedies = [],
+    isLoading,
+    error,
+  } = useSWR(
+    selectedSymptom
+      ? `/api/remedies?symptom=${selectedSymptom}`
+      : "/api/remedies",
+    fetcher,
+    { fallbackData: [] }
+  );
 
   return (
     <>
       <TitleBar title="Remedies" />
-      <CardList elements={data} />
+      <RemedyFilter
+        selectedSymptom={selectedSymptom}
+        onSelect={handleSelect}
+        onClear={handleClear}
+      />
+      {isLoading && <TitleBar title="Loading..." />}
+      {error && <TitleBar title="Internal server Error!" />}
+      {!isLoading && !error && remedies.length === 0 && (
+        <EmptyMessage>No matching remedies found</EmptyMessage>
+      )}
+
+      {!isLoading && !error && remedies.length > 0 && (
+        <CardList elements={remedies} />
+      )}
     </>
   );
 }
