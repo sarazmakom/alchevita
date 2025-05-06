@@ -39,7 +39,6 @@ export default function CardList({ elements = [] }) {
           {elements.map((element) => (
             <Card
               key={element._id}
-              as="li"
               title={element.title}
               imageUrl={element.imageUrl}
               id={element._id}
