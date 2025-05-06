@@ -1,7 +1,25 @@
-export default function HomePage() {
+import useSWR from "swr";
+import CardList from "@/components/CardList/CardList";
+import TitleBar from "@/components/TitleBar/TitleBar";
+
+export default function Home() {
+  const { data, isLoading, error } = useSWR("/api/remedies", {
+    fallbackData: [],
+  });
+
+  if (isLoading) {
+    return <TitleBar title="Loading..." />;
+  }
+
+  if (error) {
+    console.error("Error while fetching index page:", error);
+    return <TitleBar title="Internal Server Error!" />;
+  }
+
   return (
-    <div>
-      <h1>Hello from Next.js</h1>
-    </div>
+    <>
+      <TitleBar title="Remedies" />
+      <CardList elements={data} />
+    </>
   );
 }
