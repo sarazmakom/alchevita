@@ -1,15 +1,18 @@
+// pages/bookmarks.js
 import useSWR from "swr";
-import CardList from "@/components/CardList/CardList";
 import TitleBar from "@/components/TitleBar/TitleBar";
+import CardList from "@/components/CardList/CardList";
 import { useBookmarks } from "@/hooks/useBookmarks";
 
-export default function Home() {
+export default function BookmarksPage() {
+  // fetch all remedies
   const {
     data: remedies = [],
-    isLoading: loadingRemedies,
     error: remediesError,
+    isLoading: loadingRemedies,
   } = useSWR("/api/remedies");
 
+  // fetch only bookmarked IDs
   const {
     bookmarkedIds,
     isLoading: loadingBookmarks,
@@ -21,18 +24,21 @@ export default function Home() {
   const error = remediesError || bookmarksError;
 
   if (isLoading) {
-    return <TitleBar title="Loading…" />;
+    return <TitleBar title="Loading bookmarked remedies…" />;
   }
   if (error) {
-    console.error(error);
-    return <TitleBar title="Error fetching data" />;
+    console.error("Error fetching bookmarked remedies:", error);
+    return <TitleBar title="Error loading bookmarks" />;
   }
+
+  // filter to only those remedies whose IDs are in the bookmark set
+  const bookmarkedRemedies = remedies.filter((r) => bookmarkedIds.has(r._id));
 
   return (
     <>
-      <TitleBar title="Your Remedies" />
+      <TitleBar title="Bookmarked Remedies" />
       <CardList
-        elements={remedies}
+        elements={bookmarkedRemedies}
         bookmarkedIds={bookmarkedIds}
         onBookmarkToggle={toggleBookmark}
       />

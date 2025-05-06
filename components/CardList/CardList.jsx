@@ -29,20 +29,26 @@ const EmptyMessage = styled.p`
   text-align: center;
 `;
 
-export default function CardList({ elements = [] }) {
+export default function CardList({
+  elements = [],
+  bookmarkedIds = new Set(),
+  onBookmarkToggle,
+}) {
   return (
     <StyledMain>
       {elements.length === 0 ? (
         <EmptyMessage>No remedies available.</EmptyMessage>
       ) : (
         <StyledGrid>
-          {elements.map((element) => (
+          {elements.map((el) => (
             <Card
-              key={element._id}
-              title={element.title}
-              imageUrl={element.imageUrl}
-              id={element._id}
-              symptoms={element.symptoms}
+              key={el._id}
+              title={el.title}
+              imageUrl={el.imageUrl}
+              id={el._id}
+              symptoms={el.symptoms}
+              bookmarked={bookmarkedIds.has(el._id)}
+              onBookmarkToggle={onBookmarkToggle}
             />
           ))}
         </StyledGrid>
