@@ -22,12 +22,6 @@ const NavItem = styled(Link)`
   justify-content: center;
   text-decoration: none;
   color: ${({ isActive }) => (isActive ? "#1971c2" : "#6b7280")};
-`;
-
-const NavIcon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 24px;
   height: 24px;
 `;
@@ -38,25 +32,19 @@ export default function Navbar() {
   return (
     <NavContainer>
       <NavItem href="/" isActive={router.pathname === "/"}>
-        <NavIcon>
-          <House size={24} />
-        </NavIcon>
+        <House size={24} />
       </NavItem>
       <NavItem
         href="/bookmark-remedies"
-        isActive={router.pathname === "/remedies/bookmarks"}
+        isActive={router.pathname === "/bookmark-remedies"}
       >
-        <NavIcon>
-          <Heart size={24} />
-        </NavIcon>
+        <Heart size={24} />
       </NavItem>
       <NavItem
         href="/create-remedy"
-        isActive={router.pathname === "/remedies/create"}
+        isActive={router.pathname === "/create-remedy"}
       >
-        <NavIcon>
-          <SquarePlus size={24} />
-        </NavIcon>
+        <SquarePlus size={24} />
       </NavItem>
     </NavContainer>
   );
