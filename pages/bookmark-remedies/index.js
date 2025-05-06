@@ -1,4 +1,3 @@
-// pages/bookmarks.js
 import useSWR from "swr";
 import TitleBar from "@/components/TitleBar/TitleBar";
 import CardList from "@/components/CardList/CardList";

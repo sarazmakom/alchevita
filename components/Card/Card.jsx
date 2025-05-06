@@ -1,4 +1,3 @@
-// Card.jsx
 import Link from "next/link";
 import styled from "styled-components";
 import { StyledImage } from "../StyledImage/StyledImage";
