@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === "GET") {
-    const remedy = await Remedy.findById(id);
+    const remedy = await Remedy.findById(id).populate("symptoms");
 
     if (!remedy) {
       res.status(404).json({ status: "Not found" });

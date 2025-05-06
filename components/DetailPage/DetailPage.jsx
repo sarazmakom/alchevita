@@ -89,11 +89,11 @@ export default function DetailPage({ element }) {
   return (
     <Container>
       <BackButton
-        data-testid="back-to-gallery"
-        aria-label="Back to gallery"
+        data-testid="back-to-remedies"
+        aria-label="Back to remedies"
         onClick={(e) => {
           e.preventDefault();
-          router.push("/gallery");
+          router.push("/");
         }}
       >
         <StyledSVG
@@ -125,10 +125,25 @@ export default function DetailPage({ element }) {
         </Column>
 
         <Column width="50%">
-          <Title>{element.title}</Title>
-          <RemedyText>{`Artist: ${element.usage}`}</RemedyText>
-          <RemedyText>{`Year: ${element.preparation}`}</RemedyText>
-          <RemedyText>{`Genre: ${element.genre}`}</RemedyText>
+          <Title><strong>{element.title}</strong></Title>
+          <RemedyText>
+            <strong>Ingredients:</strong>
+            <ul>
+              {element.ingredients.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </RemedyText>
+          <RemedyText><strong>Usage: </strong>{`${element.usage}`}</RemedyText>
+          <RemedyText><strong>Preparation: </strong>{`${element.preparation}`}</RemedyText>
+          <RemedyText>
+            <strong>Symptoms:</strong>
+            <ul>
+              {element.symptoms.map((symptom, index) => (
+                <li key={symptom._id || index}>{symptom.name}</li>
+              ))}
+            </ul>
+          </RemedyText>
         </Column>
       </FlexContainer>
     </Container>
