@@ -125,7 +125,9 @@ export default function DetailPage({ element }) {
         </Column>
 
         <Column width="50%">
-          <Title><strong>{element.title}</strong></Title>
+          <Title>
+            <strong>{element.title}</strong>
+          </Title>
           <RemedyText>
             <strong>Ingredients:</strong>
             <ul>
@@ -134,14 +136,24 @@ export default function DetailPage({ element }) {
               ))}
             </ul>
           </RemedyText>
-          <RemedyText><strong>Usage: </strong>{`${element.usage}`}</RemedyText>
-          <RemedyText><strong>Preparation: </strong>{`${element.preparation}`}</RemedyText>
+          <RemedyText>
+            <strong>Usage: </strong>
+            {`${element.usage}`}
+          </RemedyText>
+          <RemedyText>
+            <strong>Preparation: </strong>
+            {`${element.preparation}`}
+          </RemedyText>
           <RemedyText>
             <strong>Symptoms:</strong>
             <ul>
-              {element.symptoms.map((symptom, index) => (
-                <li key={symptom._id || index}>{symptom.name}</li>
-              ))}
+              {element.symptoms?.length > 0 ? (
+                element.symptoms.map((symptom, index) => (
+                  <li key={symptom._id || index}>{symptom.name}</li>
+                ))
+              ) : (
+                <li>No symptoms listed.</li>
+              )}
             </ul>
           </RemedyText>
         </Column>
