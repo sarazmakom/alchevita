@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Image from "next/image";
 
-const Container = styled.div`
+const Main = styled.main`
   width: 100%;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -18,7 +18,7 @@ const BackButton = styled.button`
   padding: 0;
 
   &:hover {
-    color: #4f46e5;
+    color: #1fab89;
   }
 
   transition: color 0.2s ease-in-out;
@@ -29,7 +29,7 @@ const StyledSVG = styled.svg`
   height: 2rem;
 `;
 
-const FlexContainer = styled.div`
+const Section = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -40,13 +40,21 @@ const FlexContainer = styled.div`
   }
 `;
 
-const Column = styled.div`
+const Aside = styled.aside`
   width: 100%;
   padding: 0 1rem;
-  margin-bottom: ${({ mb }) => mb || "0"};
 
   @media (min-width: 768px) {
-    width: ${({ width }) => width || "100%"};
+    width: 50%;
+  }
+`;
+
+const Article = styled.article`
+  width: 100%;
+  padding: 0 1rem;
+
+  @media (min-width: 768px) {
+    width: 50%;
   }
 `;
 
@@ -81,8 +89,8 @@ const Title = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
-const RemedyText = styled.p`
-  color: #4b5563;
+const TextBlock = styled.div`
+  color: rgb(42, 72, 67);
   margin-bottom: 1rem;
   line-height: 1.6;
 `;
@@ -91,7 +99,7 @@ export default function DetailPage({ element }) {
   const router = useRouter();
 
   return (
-    <Container>
+    <Main>
       <BackButton
         data-testid="back-to-remedies"
         aria-label="Back to remedies"
@@ -115,8 +123,8 @@ export default function DetailPage({ element }) {
         </StyledSVG>
       </BackButton>
 
-      <FlexContainer>
-        <Column width="50%">
+      <Section>
+        <Aside>
           <ImageContainer>
             <Image
               src={element.imageUrl}
@@ -126,27 +134,31 @@ export default function DetailPage({ element }) {
               height={500}
             />
           </ImageContainer>
-        </Column>
+        </Aside>
 
-        <Column width="50%">
+        <Article>
           <Title>{element.title}</Title>
-          <RemedyText>
+
+          <TextBlock as="section">
             <strong>Ingredients:</strong>
             <ul>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
-          </RemedyText>
-          <RemedyText>
+          </TextBlock>
+
+          <TextBlock as="section">
             <strong>Usage: </strong>
             {`${element.usage}`}
-          </RemedyText>
-          <RemedyText>
+          </TextBlock>
+
+          <TextBlock as="section">
             <strong>Preparation: </strong>
             {`${element.preparation}`}
-          </RemedyText>
-          <RemedyText>
+          </TextBlock>
+
+          <TextBlock as="section">
             <strong>Symptoms:</strong>
             <ul>
               {element.symptoms?.length > 0 ? (
@@ -157,9 +169,9 @@ export default function DetailPage({ element }) {
                 <li>No symptoms listed.</li>
               )}
             </ul>
-          </RemedyText>
-        </Column>
-      </FlexContainer>
-    </Container>
+          </TextBlock>
+        </Article>
+      </Section>
+    </Main>
   );
 }
