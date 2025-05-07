@@ -1,14 +1,28 @@
 import dbConnect from "@/db/connect";
 import { Remedy } from "@/db/models/Remedy";
+import { Symptom } from "@/db/models/Symptom";
 
 export default async function handler(req, res) {
   try {
     await dbConnect();
 
-    const { bookmarked } = req.query;
+    if (req.method !== "GET") {
+      return res.status(405).json({ status: "Method not allowed!" });
+    }
 
+    const { bookmarked, symptom } = req.query;
+
+    // Handle symptom filtering first
+    let symptomFilter = {};
+    if (symptom) {
+      const symDoc = await Symptom.findOne({ name: symptom });
+      if (!symDoc) return res.status(200).json([]);
+      symptomFilter = { symptoms: symDoc._id };
+    }
+
+    // Base aggregation pipeline
     const aggregation = [
-      // Lookup bookmarks first
+      { $match: symptomFilter }, // Apply symptom filter here
       {
         $lookup: {
           from: "bookmarkremedies",
@@ -17,7 +31,6 @@ export default async function handler(req, res) {
           as: "bookmarkInfo",
         },
       },
-      // Lookup symptoms while preserving order
       {
         $lookup: {
           from: "symptoms",
@@ -33,12 +46,13 @@ export default async function handler(req, res) {
                 __order: { $indexOfArray: ["$$symptomIds", "$_id"] },
               },
             },
-            { $sort: { __order: 1 } },
+            {
+              $sort: { __order: 1 },
+            },
           ],
           as: "symptomsData",
         },
       },
-      // Add computed fields
       {
         $addFields: {
           isBookmarked: { $gt: [{ $size: "$bookmarkInfo" }, 0] },
@@ -46,25 +60,26 @@ export default async function handler(req, res) {
             $map: {
               input: "$symptomsData",
               as: "symptom",
-              in: {
-                _id: "$$symptom._id",
-                name: "$$symptom.name",
-              },
+              in: { _id: "$$symptom._id", name: "$$symptom.name" },
             },
           },
         },
       },
-      // Remove temporary fields
       { $unset: ["bookmarkInfo", "symptomsData"] },
     ];
 
+    // Add bookmarked filter if needed
     if (bookmarked === "true") {
       aggregation.push({ $match: { isBookmarked: true } });
     }
 
     const remedies = await Remedy.aggregate(aggregation);
-    res.status(200).json(remedies);
+    return res.status(200).json(remedies);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch remedies" });
+    console.error("API Error:", error);
+    return res.status(500).json({
+      status: "Server Error",
+      error: error.message || "Failed to process request",
+    });
   }
 }
