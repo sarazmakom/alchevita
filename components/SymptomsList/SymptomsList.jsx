@@ -31,8 +31,8 @@ export default function SymptomsList({ symptoms }) {
 
   return (
     <StyledSymptomsList>
-      {symptoms.map((symptom) => (
-        <SymptomPill key={symptom._id}>{symptom.name}</SymptomPill>
+      {symptoms.map((symptom, idx) => (
+        <SymptomPill key={`${symptom._id}-${idx}`}>{symptom.name}</SymptomPill>
       ))}
     </StyledSymptomsList>
   );

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import CardList from "@/components/CardList/CardList";
 import TitleBar from "@/components/TitleBar/TitleBar";
@@ -12,25 +12,16 @@ const EmptyMessage = styled.p`
   color: #666;
 `;
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-export default function Home() {
+export default function Home({ initialSymptom }) {
   const router = useRouter();
-  const { symptom: initialSymptom } = router.query;
-  const [selectedSymptom, setSelectedSymptom] = useState("");
+  const [selectedSymptom, setSelectedSymptom] = useState(initialSymptom || "");
 
-  useEffect(() => {
-    if (initialSymptom) {
-      setSelectedSymptom(initialSymptom);
-    }
-  }, [initialSymptom]);
-
-  const handleSelect = (symptomId) => {
-    setSelectedSymptom(symptomId);
+  const handleSelect = (symptomName) => {
+    setSelectedSymptom(symptomName);
     router.push(
       {
         pathname: "/",
-        query: symptomId ? { symptom: symptomId } : {},
+        query: symptomName ? { symptom: symptomName } : {},
       },
       undefined,
       { shallow: true }
@@ -50,7 +41,6 @@ export default function Home() {
     selectedSymptom
       ? `/api/remedies?symptom=${selectedSymptom}`
       : "/api/remedies",
-    fetcher,
     { fallbackData: [] }
   );
 
@@ -73,4 +63,12 @@ export default function Home() {
       )}
     </>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      initialSymptom: query.symptom || "",
+    },
+  };
 }

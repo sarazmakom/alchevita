@@ -1,8 +1,7 @@
 import useSWR from "swr";
 import styled from "styled-components";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-const FilterWrapper = styled.div`
+const FilterWrapper = styled.section`
   margin: 1.5rem auto;
   display: flex;
   align-items: center;
@@ -20,7 +19,7 @@ const Select = styled.select`
   border-radius: 8px;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #1fab89;
   min-width: 200px;
   outline: none;
@@ -30,35 +29,23 @@ const Select = styled.select`
   }
 `;
 
-const Badge = styled.span`
-  color: #d1d5db;
-  background-color: #10b981;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
 const ClearButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  border-radius: 9999px;
   color: #d1d5db;
+  width: 2rem;
+  height: 2rem;
+  background-color: #10b981;
   &:hover {
     opacity: 0.75;
   }
 `;
 
 export default function RemedyFilter({ selectedSymptom, onSelect, onClear }) {
-  const {
-    data: symptoms = [],
-    isLoading,
-    error,
-  } = useSWR("/api/symptoms", fetcher);
+  const { data: symptoms = [], isLoading, error } = useSWR("/api/symptoms");
 
   if (isLoading) return <p>Loading filters...</p>;
   if (error) return <p>Failed to loading filters</p>;
@@ -70,19 +57,16 @@ export default function RemedyFilter({ selectedSymptom, onSelect, onClear }) {
       >
         <option value="">Choose symptom</option>
         {symptoms.map((symptom) => (
-          <option key={symptom._id} value={symptom._id}>
+          <option key={symptom._id} value={symptom.name}>
             {symptom.name}
           </option>
         ))}
       </Select>
 
       {selectedSymptom && (
-        <Badge>
-          {symptoms.find((symptom) => symptom._id === selectedSymptom)?.name}
-          <ClearButton onClick={onClear} aria-label="Clear filter">
-            x
-          </ClearButton>
-        </Badge>
+        <ClearButton onClick={onClear} aria-label="Clear filter">
+          x
+        </ClearButton>
       )}
     </FilterWrapper>
   );
