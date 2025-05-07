@@ -1,4 +1,12 @@
 import Head from "next/head";
+import styled from "styled-components";
+import Navbar from "../Navbar/Navbar";
+import Logo from "../Logo/Logo";
+
+const MainContent = styled.main`
+  padding-bottom: 5rem;
+  padding-top: 4rem;
+`;
 
 export default function Layout({ children }) {
   return (
@@ -6,7 +14,9 @@ export default function Layout({ children }) {
       <Head>
         <title>Alchevita</title>
       </Head>
-      {children}
+      <Logo />
+      <MainContent>{children}</MainContent>
+      <Navbar />
     </>
   );
 }
