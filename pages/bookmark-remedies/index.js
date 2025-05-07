@@ -19,7 +19,7 @@ export default function BookmarksPage() {
 
   return (
     <>
-      <TitleBar title="Bookmarked Remedies" />
+      <TitleBar title="Your Remedies" />
       <CardList elements={remedies} />
     </>
   );

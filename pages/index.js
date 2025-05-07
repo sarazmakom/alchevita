@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <>
-      <TitleBar title="Your Remedies" />
+      <TitleBar title="Remedies" />
       <CardList
         elements={remedies}
         bookmarkedIds={bookmarkedIds}
