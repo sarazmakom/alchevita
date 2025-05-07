@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import styled from "styled-components";
@@ -17,6 +17,10 @@ export default function Home({ initialSymptom }) {
   const router = useRouter();
   const [selectedSymptom, setSelectedSymptom] = useState(initialSymptom || "");
   const currentPath = router.pathname;
+
+  useEffect(() => {
+    setSelectedSymptom(router.query.symptom || "");
+  }, [router.query.symptom]);
 
   // Get bookmark functionality
   const { toggle } = useBookmarks();

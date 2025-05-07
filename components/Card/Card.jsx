@@ -40,7 +40,7 @@ export default function Card({ remedy, currentPath }) {
         </ImageContainer>
       </Link>
       <h3>{remedy.title}</h3>
-      <SymptomsList symptoms={remedy.symptoms} />
+      <SymptomsList symptoms={remedy.symptoms} currentPath={currentPath} />
     </CardContainer>
   );
 }
