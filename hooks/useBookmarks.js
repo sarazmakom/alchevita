@@ -1,36 +1,31 @@
-import useSWR from "swr";
-import { useMemo } from "react";
+import { useSWRConfig } from "swr";
 
 export function useBookmarks() {
-  const { data, error, mutate } = useSWR("/api/bookmark-remedies");
-  const isLoading = !error && !data;
+  const { mutate } = useSWRConfig();
 
-  // convenience Set of string IDs
-  const bookmarkedIds = useMemo(
-    () => new Set(data?.map((b) => b.remedyId)),
-    [data]
-  );
-
-  const toggle = async (remedyId, nextState) => {
-    if (nextState) {
-      // add bookmark
-      await fetch("/api/bookmark-remedies", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ remedyId }),
-      });
-    } else {
-      // find the bookmark doc for this remedy
-      const bookmark = data.find((b) => b.remedyId === remedyId);
-      if (bookmark) {
-        await fetch(`/api/bookmark-remedies/${bookmark._id}`, {
+  const toggle = async (remedyId, isBookmarked) => {
+    try {
+      if (isBookmarked) {
+        // DELETE to /api/bookmark-remedies/[remedyId]
+        await fetch(`/api/bookmark-remedies/${remedyId}`, {
           method: "DELETE",
         });
+      } else {
+        // POST to /api/bookmark-remedies
+        await fetch("/api/bookmark-remedies", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ remedyId }),
+        });
       }
+
+      // Revalidate data
+      mutate("/api/remedies?bookmarked=true");
+      mutate("/api/remedies");
+    } catch (error) {
+      console.error("Bookmark operation failed:", error);
     }
-    // re-fetch list
-    return mutate();
   };
 
-  return { bookmarkedIds, isLoading, error, toggle };
+  return { toggle };
 }

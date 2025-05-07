@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { StyledImage } from "../StyledImage/StyledImage";
 import SymptomsList from "../SymptomsList/SymptomsList";
 import BookMarkButton from "../BookmarkButton/BookmarkButton";
+import { useBookmarks } from "@/hooks/useBookmarks";
 
 const CardContainer = styled.li`
   position: relative; /* <-- ensure absolute children (bookmark) are positioned correctly */
@@ -17,32 +18,29 @@ const ImageContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-export default function Card({
-  title,
-  imageUrl,
-  id,
-  symptoms,
-  bookmarked = false,
-  onBookmarkToggle,
-}) {
+export default function Card({ remedy }) {
+  const { toggle } = useBookmarks();
   return (
     <CardContainer>
       <BookMarkButton
-        bookmarked={bookmarked}
-        onToggle={(next) => onBookmarkToggle(id, next)}
+        bookmarked={remedy.isBookmarked}
+        onToggle={() => toggle(remedy._id, remedy.isBookmarked)}
       />
-      <Link href={`remedies/${id}`} aria-label={`View details for ${title}`}>
+      <Link
+        href={`remedies/${remedy._id}`}
+        aria-label={`View details for ${remedy.title}`}
+      >
         <ImageContainer>
           <StyledImage
-            src={imageUrl}
+            src={remedy.imageUrl}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            alt={`Visual representation of ${title}`}
+            alt={`Visual representation of ${remedy.title}`}
           />
         </ImageContainer>
       </Link>
-      <h3>{title}</h3>
-      <SymptomsList symptoms={symptoms} />
+      <h3>{remedy.title}</h3>
+      <SymptomsList symptoms={remedy.symptoms} />
     </CardContainer>
   );
 }

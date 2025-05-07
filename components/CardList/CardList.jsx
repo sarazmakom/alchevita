@@ -29,11 +29,7 @@ const EmptyMessage = styled.p`
   text-align: center;
 `;
 
-export default function CardList({
-  elements = [],
-  bookmarkedIds = new Set(),
-  onBookmarkToggle,
-}) {
+export default function CardList({ elements = [] }) {
   return (
     <StyledMain>
       {elements.length === 0 ? (
@@ -41,15 +37,7 @@ export default function CardList({
       ) : (
         <StyledGrid>
           {elements.map((el) => (
-            <Card
-              key={el._id}
-              title={el.title}
-              imageUrl={el.imageUrl}
-              id={el._id}
-              symptoms={el.symptoms}
-              bookmarked={bookmarkedIds.has(el._id)}
-              onBookmarkToggle={onBookmarkToggle}
-            />
+            <Card key={el._id} remedy={el} />
           ))}
         </StyledGrid>
       )}
