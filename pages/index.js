@@ -52,6 +52,7 @@ export default function Home({ initialSymptom }) {
         onSelect={handleSelect}
         onClear={handleClear}
       />
+      
       {isLoading && <TitleBar title="Loading..." />}
       {error && <TitleBar title="Internal server Error!" />}
       {!isLoading && !error && remedies.length === 0 && (
