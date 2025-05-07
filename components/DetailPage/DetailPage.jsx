@@ -31,10 +31,13 @@ const StyledSVG = styled.svg`
 
 const FlexContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  margin-left: -1rem;
-  margin-right: -1rem;
+  flex-direction: column;
   gap: 2rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 `;
 
 const Column = styled.div`
@@ -49,6 +52,7 @@ const Column = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
+  margin-top: 2em;
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
@@ -125,9 +129,7 @@ export default function DetailPage({ element }) {
         </Column>
 
         <Column width="50%">
-          <Title>
-            <strong>{element.title}</strong>
-          </Title>
+          <Title>{element.title}</Title>
           <RemedyText>
             <strong>Ingredients:</strong>
             <ul>
