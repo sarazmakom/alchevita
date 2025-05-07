@@ -28,7 +28,7 @@ export default function Card({
   return (
     <CardContainer>
       <BookMarkButton
-        initial={bookmarked}
+        bookmarked={bookmarked}
         onToggle={(next) => onBookmarkToggle(id, next)}
       />
       <Link href={`remedies/${id}`} aria-label={`View details for ${title}`}>

@@ -37,14 +37,10 @@ const BookmarkButton = styled.button`
   }
 `;
 
-export default function BookMarkbutton({ initial = false, onToggle }) {
-  const [bookmarked, setBookmarked] = useState(initial);
-
+export default function BookMarkbutton({ bookmarked, onToggle }) {
   const toggle = (e) => {
     e.stopPropagation();
-    const next = !bookmarked;
-    setBookmarked(next);
-    if (onToggle) onToggle(next);
+    if (onToggle) onToggle(!bookmarked);
   };
 
   return (
