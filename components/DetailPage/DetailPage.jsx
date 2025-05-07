@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Image from "next/image";
 
-const Main = styled.main`
+const Wrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -89,8 +89,8 @@ const Title = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
-const TextBlock = styled.div`
-  color: rgb(42, 72, 67);
+const Paragraph = styled.p`
+  color: rgb(2, 2, 2);
   margin-bottom: 1rem;
   line-height: 1.6;
 `;
@@ -99,7 +99,7 @@ export default function DetailPage({ element }) {
   const router = useRouter();
 
   return (
-    <Main>
+    <Wrapper>
       <BackButton
         data-testid="back-to-remedies"
         aria-label="Back to remedies"
@@ -139,26 +139,26 @@ export default function DetailPage({ element }) {
         <Article>
           <Title>{element.title}</Title>
 
-          <TextBlock as="section">
+          <div>
             <strong>Ingredients:</strong>
             <ul>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
-          </TextBlock>
+          </div>
 
-          <TextBlock as="section">
+          <Paragraph>
             <strong>Usage: </strong>
             {`${element.usage}`}
-          </TextBlock>
+          </Paragraph>
 
-          <TextBlock as="section">
+          <Paragraph>
             <strong>Preparation: </strong>
             {`${element.preparation}`}
-          </TextBlock>
+          </Paragraph>
 
-          <TextBlock as="section">
+          <div>
             <strong>Symptoms:</strong>
             <ul>
               {element.symptoms?.length > 0 ? (
@@ -169,9 +169,9 @@ export default function DetailPage({ element }) {
                 <li>No symptoms listed.</li>
               )}
             </ul>
-          </TextBlock>
+          </div>
         </Article>
       </Section>
-    </Main>
+    </Wrapper>
   );
 }
