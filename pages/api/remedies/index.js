@@ -17,12 +17,24 @@ export default async function handler(req, res) {
           as: "bookmarkInfo",
         },
       },
-      // Then lookup symptoms
+      // Lookup symptoms while preserving order
       {
         $lookup: {
           from: "symptoms",
-          localField: "symptoms",
-          foreignField: "_id",
+          let: { symptomIds: "$symptoms" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $in: ["$_id", "$$symptomIds"] },
+              },
+            },
+            {
+              $addFields: {
+                __order: { $indexOfArray: ["$$symptomIds", "$_id"] },
+              },
+            },
+            { $sort: { __order: 1 } },
+          ],
           as: "symptomsData",
         },
       },
@@ -30,7 +42,6 @@ export default async function handler(req, res) {
       {
         $addFields: {
           isBookmarked: { $gt: [{ $size: "$bookmarkInfo" }, 0] },
-          // Transform symptoms data to just names
           symptoms: {
             $map: {
               input: "$symptomsData",

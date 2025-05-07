@@ -18,13 +18,13 @@ const ImageContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-export default function Card({ remedy }) {
+export default function Card({ remedy, currentPath }) {
   const { toggle } = useBookmarks();
   return (
     <CardContainer>
       <BookMarkButton
         bookmarked={remedy.isBookmarked}
-        onToggle={() => toggle(remedy._id, remedy.isBookmarked)}
+        onToggle={() => toggle(remedy._id, remedy.isBookmarked, currentPath)}
       />
       <Link
         href={`remedies/${remedy._id}`}

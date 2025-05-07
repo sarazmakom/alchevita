@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import TitleBar from "@/components/TitleBar/TitleBar";
 import CardList from "@/components/CardList/CardList";
+import Router from "next/router";
 
 export default function BookmarksPage() {
   const {
@@ -17,10 +18,12 @@ export default function BookmarksPage() {
     return <TitleBar title="Error loading bookmarks" />;
   }
 
+  const currentPath = Router.pathname;
+
   return (
     <>
       <TitleBar title="Your Remedies" />
-      <CardList elements={remedies} />
+      <CardList elements={remedies} currentPath={currentPath} />
     </>
   );
 }

@@ -3,7 +3,7 @@ import { useSWRConfig } from "swr";
 export function useBookmarks() {
   const { mutate } = useSWRConfig();
 
-  const toggle = async (remedyId, isBookmarked) => {
+  const toggle = async (remedyId, isBookmarked, currentPath) => {
     try {
       if (isBookmarked) {
         // DELETE to /api/bookmark-remedies/[remedyId]
@@ -18,10 +18,10 @@ export function useBookmarks() {
           body: JSON.stringify({ remedyId }),
         });
       }
-
-      // Revalidate data
-      mutate("/api/remedies?bookmarked=true");
-      mutate("/api/remedies");
+      // Revalidate data based on currentPath
+      currentPath === "/"
+        ? mutate("/api/remedies")
+        : mutate("/api/remedies?bookmarked=true");
     } catch (error) {
       console.error("Bookmark operation failed:", error);
     }

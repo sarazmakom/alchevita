@@ -2,6 +2,7 @@ import useSWR from "swr";
 import CardList from "@/components/CardList/CardList";
 import TitleBar from "@/components/TitleBar/TitleBar";
 import { useBookmarks } from "@/hooks/useBookmarks";
+import Router from "next/router";
 
 export default function Home() {
   const {
@@ -28,6 +29,8 @@ export default function Home() {
     return <TitleBar title="Error fetching data" />;
   }
 
+  const currentPath = Router.pathname;
+
   return (
     <>
       <TitleBar title="Remedies" />
@@ -35,6 +38,7 @@ export default function Home() {
         elements={remedies}
         bookmarkedIds={bookmarkedIds}
         onBookmarkToggle={toggleBookmark}
+        currentPath={currentPath}
       />
     </>
   );

@@ -29,7 +29,7 @@ const EmptyMessage = styled.p`
   text-align: center;
 `;
 
-export default function CardList({ elements = [] }) {
+export default function CardList({ elements = [], currentPath }) {
   return (
     <StyledMain>
       {elements.length === 0 ? (
@@ -37,7 +37,7 @@ export default function CardList({ elements = [] }) {
       ) : (
         <StyledGrid>
           {elements.map((el) => (
-            <Card key={el._id} remedy={el} />
+            <Card key={el._id} remedy={el} currentPath={currentPath} />
           ))}
         </StyledGrid>
       )}
