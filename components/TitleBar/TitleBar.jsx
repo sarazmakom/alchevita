@@ -9,7 +9,7 @@ const Headline = styled.h1`
   margin: 0;
   padding: 20px;
   text-align: center;
-  z-index: 1;
+  z-index: 20;
 `;
 
 export default function TitleBar({ title }) {
