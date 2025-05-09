@@ -124,7 +124,7 @@ export default function DetailPage({ element }) {
           <Title>{element.title}</Title>
 
           <section aria-labelledby="ingredients-heading">
-          <strong><p id="ingredients-heading">Ingredients:</p></strong>
+          <p id="ingredients-heading"><strong>Ingredients:</strong></p>
             <ul>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
@@ -133,17 +133,17 @@ export default function DetailPage({ element }) {
           </section>
 
           <Paragraph>
-            <strong><p>Usage: </p></strong>
-            {element.usage}
+          <p><strong>Usage:</strong></p>
+          {element.usage}
           </Paragraph>
 
           <Paragraph>
-          <strong><p>Preparation: </p></strong>
+          <p><strong>Preparation: </strong></p>
             {element.preparation}
           </Paragraph>
 
           <section aria-labelledby="symptoms-heading">
-          <strong><p id="symptoms-heading">Symptoms:</p></strong>
+          <p id="symptoms-heading"><strong>Symptoms:</strong></p>
             <ul>
               {element.symptoms?.length > 0 ? (
                 element.symptoms.map((symptom, index) => (
