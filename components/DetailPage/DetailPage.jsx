@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Image from "next/image";
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   width: 100%;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -43,9 +43,19 @@ const Section = styled.section`
 const Aside = styled.aside`
   width: 100%;
   padding: 0 1rem;
+  position: relative;
+  margin-top: 2em;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 
   @media (min-width: 768px) {
     width: 50%;
+  }
+
+  img {
+    border-radius: 8px;
+    object-fit: cover;
   }
 `;
 
@@ -55,30 +65,6 @@ const Article = styled.article`
 
   @media (min-width: 768px) {
     width: 50%;
-  }
-`;
-
-const ImageContainer = styled.div`
-  position: relative;
-  margin-top: 2em;
-  width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-
-  &::before {
-    content: "";
-    display: block;
-    padding-top: 56.25%; // 16:9 aspect ratio
-  }
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 `;
 
@@ -125,22 +111,20 @@ export default function DetailPage({ element }) {
 
       <Section>
         <Aside>
-          <ImageContainer>
-            <Image
-              src={element.imageUrl}
-              alt={element.name}
-              loading="lazy"
-              width={500}
-              height={500}
-            />
-          </ImageContainer>
+          <Image
+            src={element.imageUrl}
+            alt={element.name}
+            loading="lazy"
+            width={500}
+            height={500}
+          />
         </Aside>
 
         <Article>
           <Title>{element.title}</Title>
 
           <section aria-labelledby="ingredients-heading">
-            <strong id="ingredients-heading">Ingredients:</strong>
+            <h4 id="ingredients-heading">Ingredients:</h4>
             <ul>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
@@ -149,17 +133,17 @@ export default function DetailPage({ element }) {
           </section>
 
           <Paragraph>
-            <strong>Usage: </strong>
+            <h4>Usage: </h4>
             {element.usage}
           </Paragraph>
 
           <Paragraph>
-            <strong>Preparation: </strong>
+            <h4>Preparation: </h4>
             {element.preparation}
           </Paragraph>
 
           <section aria-labelledby="symptoms-heading">
-            <strong id="symptoms-heading">Symptoms:</strong>
+            <h4 id="ingredients-symptoms">Symptoms:</h4>
             <ul>
               {element.symptoms?.length > 0 ? (
                 element.symptoms.map((symptom, index) => (
