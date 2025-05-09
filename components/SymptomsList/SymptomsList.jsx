@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const StyledSymptomsList = styled.ul`
   display: flex;
@@ -9,7 +11,7 @@ const StyledSymptomsList = styled.ul`
   margin: 0.5rem 0 0;
 `;
 
-const SymptomPill = styled.li`
+const SymptomPill = styled(Link)`
   background-color: #f3f4f6;
   border-radius: 1rem;
   padding: 0.25rem 0.75rem;
@@ -27,12 +29,25 @@ const SymptomPill = styled.li`
 `;
 
 export default function SymptomsList({ symptoms }) {
+  const router = useRouter();
+
   if (!symptoms || symptoms.length === 0) return null;
 
   return (
     <StyledSymptomsList>
       {symptoms.map((symptom) => (
-        <SymptomPill key={symptom._id}>{symptom.name}</SymptomPill>
+        <SymptomPill
+          key={symptom._id}
+          href={{
+            pathname: router.pathname,
+            query: { ...router.query, symptom: symptom.name },
+          }}
+          shallow
+          passHref
+          scroll={false}
+        >
+          {symptom.name}
+        </SymptomPill>
       ))}
     </StyledSymptomsList>
   );

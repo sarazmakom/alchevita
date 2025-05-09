@@ -33,9 +33,13 @@ export default function Home({ initialSymptom }) {
     mutate,
   } = useSWR(
     selectedSymptom
-      ? `/api/remedies?symptom=${selectedSymptom}`
-      : "/api/remedies",
-    { fallbackData: [] }
+      ? `/api/remedies?bookmarked=true&symptom=${encodeURIComponent(
+          selectedSymptom
+        )}`
+      : `/api/remedies?bookmarked=true`,
+    {
+      fallbackData: [],
+    }
   );
 
   // Symptom filter handlers
@@ -43,7 +47,7 @@ export default function Home({ initialSymptom }) {
     setSelectedSymptom(symptomName);
     router.push(
       {
-        pathname: "/",
+        pathname: "/bookmark-remedies",
         query: symptomName ? { symptom: symptomName } : {},
       },
       undefined,
@@ -53,7 +57,9 @@ export default function Home({ initialSymptom }) {
 
   const handleClear = () => {
     setSelectedSymptom("");
-    router.push({ pathname: "/", query: {} }, undefined, { shallow: true });
+    router.push({ pathname: "/bookmark-remedies", query: {} }, undefined, {
+      shallow: true,
+    });
   };
 
   // Bookmark toggle handler
@@ -83,9 +89,9 @@ export default function Home({ initialSymptom }) {
 
   return (
     <>
-      <TitleBar title={"Remedies"} />
+      <TitleBar title={"My Remedies"} />
 
-      {currentPath === "/" && (
+      {currentPath === "/bookmark-remedies" && (
         <RemedyFilter
           selectedSymptom={selectedSymptom}
           onSelect={handleSelect}

@@ -29,21 +29,15 @@ const EmptyMessage = styled.p`
   text-align: center;
 `;
 
-export default function CardList({ elements = [] }) {
+export default function CardList({ elements = [], currentPath }) {
   return (
     <StyledMain>
       {elements.length === 0 ? (
         <EmptyMessage>No remedies available.</EmptyMessage>
       ) : (
         <StyledGrid>
-          {elements.map((element) => (
-            <Card
-              key={element._id}
-              title={element.title}
-              imageUrl={element.imageUrl}
-              id={element._id}
-              symptoms={element.symptoms}
-            />
+          {elements.map((el) => (
+            <Card key={el._id} remedy={el} currentPath={currentPath} />
           ))}
         </StyledGrid>
       )}
