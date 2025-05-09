@@ -47,7 +47,7 @@ const Aside = styled.aside`
   margin-top: 2em;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  // box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 
   @media (min-width: 768px) {
     width: 50%;
