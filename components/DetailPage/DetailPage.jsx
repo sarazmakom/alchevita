@@ -81,6 +81,25 @@ const Paragraph = styled.p`
   line-height: 1.6;
 `;
 
+const StyledList = styled.ul`
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 1.5rem;
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+
+    &::before {
+      content: "🍃";
+      position: absolute;
+      left: 0;
+    }
+  }
+`;
+
 export default function DetailPage({ element }) {
   const router = useRouter();
 
@@ -124,27 +143,35 @@ export default function DetailPage({ element }) {
           <Title>{element.title}</Title>
 
           <section aria-labelledby="ingredients-heading">
-          <p id="ingredients-heading"><strong>Ingredients:</strong></p>
-            <ul>
+            <p id="ingredients-heading">
+              <strong>Ingredients</strong>
+            </p>
+            <StyledList>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
-            </ul>
+            </StyledList>
           </section>
 
           <Paragraph>
-          <p><strong>Usage:</strong></p>
-          {element.usage}
-          </Paragraph>
-
-          <Paragraph>
-          <p><strong>Preparation: </strong></p>
+            <p>
+              <strong>Preparation</strong>
+            </p>
             {element.preparation}
           </Paragraph>
 
+          <Paragraph>
+            <p>
+              <strong>Usage</strong>
+            </p>
+            {element.usage}
+          </Paragraph>
+
           <section aria-labelledby="symptoms-heading">
-          <p id="symptoms-heading"><strong>Symptoms:</strong></p>
-            <ul>
+            <p id="symptoms-heading">
+              <strong>Symptoms</strong>
+            </p>
+            <StyledList>
               {element.symptoms?.length > 0 ? (
                 element.symptoms.map((symptom, index) => (
                   <li key={symptom._id || index}>{symptom.name}</li>
@@ -152,7 +179,7 @@ export default function DetailPage({ element }) {
               ) : (
                 <li>No symptoms listed.</li>
               )}
-            </ul>
+            </StyledList>
           </section>
         </Article>
       </Section>
