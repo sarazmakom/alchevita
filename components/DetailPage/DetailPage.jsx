@@ -74,12 +74,6 @@ const Title = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
-const Paragraph = styled.div`
-  color: rgb(2, 2, 2);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-`;
-
 const StyledList = styled.ul`
   list-style: none;
   padding-left: 0;
@@ -142,9 +136,7 @@ export default function DetailPage({ element }) {
           <Title>{element.title}</Title>
 
           <section aria-labelledby="ingredients-heading">
-            <h3 id="ingredients-heading">
-              Ingredients
-            </h3>
+            <h3 id="ingredients-heading">Ingredients</h3>
             <StyledList>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
@@ -152,21 +144,18 @@ export default function DetailPage({ element }) {
             </StyledList>
           </section>
 
-          <Paragraph>
-           <h3>Preparation</h3>
-            {element.preparation}
-          </Paragraph>
+          <section aria-labelledby="preparation-heading">
+            <h3 id="preparation-heading">Preparation</h3>
+            <p>{element.preparation}</p>
+          </section>
 
-          <Paragraph>
-          <h3>Usage</h3>
-
-            {element.usage}
-          </Paragraph>
+          <section aria-labelledby="usage-heading">
+            <h3 id="usage-heading">Usage</h3>
+            <p>{element.usage}</p>
+          </section>
 
           <section aria-labelledby="symptoms-heading">
-          <h3 id="symptoms-heading">
-              Symptoms
-            </h3>
+            <h3 id="symptoms-heading">Symptoms</h3>
             <StyledList>
               {element.symptoms?.length > 0 ? (
                 element.symptoms.map((symptom, index) => (
