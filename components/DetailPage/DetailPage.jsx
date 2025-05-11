@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import Image from "next/image";
 
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 2rem 1rem;
