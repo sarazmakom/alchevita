@@ -29,7 +29,7 @@ const StyledSVG = styled.svg`
   height: 2rem;
 `;
 
-const Section = styled.section`
+const Flex = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -47,7 +47,6 @@ const Aside = styled.aside`
   margin-top: 2em;
   border-radius: 8px;
   overflow: hidden;
-  // box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 
   @media (min-width: 768px) {
     width: 50%;
@@ -75,7 +74,7 @@ const Title = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
-const Paragraph = styled.p`
+const Paragraph = styled.div`
   color: rgb(2, 2, 2);
   margin-bottom: 1rem;
   line-height: 1.6;
@@ -128,7 +127,7 @@ export default function DetailPage({ element }) {
         </StyledSVG>
       </BackButton>
 
-      <Section>
+      <Flex>
         <Aside>
           <Image
             src={element.imageUrl}
@@ -143,9 +142,9 @@ export default function DetailPage({ element }) {
           <Title>{element.title}</Title>
 
           <section aria-labelledby="ingredients-heading">
-            <p id="ingredients-heading">
-              <strong>Ingredients</strong>
-            </p>
+            <h3 id="ingredients-heading">
+              Ingredients
+            </h3>
             <StyledList>
               {element.ingredients.map((item, index) => (
                 <li key={index}>{item}</li>
@@ -154,23 +153,20 @@ export default function DetailPage({ element }) {
           </section>
 
           <Paragraph>
-            <p>
-              <strong>Preparation</strong>
-            </p>
+           <h3>Preparation</h3>
             {element.preparation}
           </Paragraph>
 
           <Paragraph>
-            <p>
-              <strong>Usage</strong>
-            </p>
+          <h3>Usage</h3>
+
             {element.usage}
           </Paragraph>
 
           <section aria-labelledby="symptoms-heading">
-            <p id="symptoms-heading">
-              <strong>Symptoms</strong>
-            </p>
+          <h3 id="symptoms-heading">
+              Symptoms
+            </h3>
             <StyledList>
               {element.symptoms?.length > 0 ? (
                 element.symptoms.map((symptom, index) => (
@@ -182,7 +178,7 @@ export default function DetailPage({ element }) {
             </StyledList>
           </section>
         </Article>
-      </Section>
+      </Flex>
     </Wrapper>
   );
 }
