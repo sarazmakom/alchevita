@@ -72,7 +72,7 @@ export default async function handler(req, res) {
     if (bookmarked === "true") {
       aggregation.push({ $match: { isBookmarked: true } });
     }
-    aggregation.push({ $sort: { createdAt: -1 } });
+    aggregation.push({ $sort: { _id: -1 } }); // sorted by id
 
     const remedies = await Remedy.aggregate(aggregation);
     return res.status(200).json(remedies);

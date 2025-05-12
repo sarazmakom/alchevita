@@ -2,6 +2,7 @@ import dbConnect from "@/db/connect";
 import { Remedy } from "@/db/models/Remedy";
 
 const DEFAULT_IMAGE_URL = "https://via.placeholder.com/600x400?text=No+Image";
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
