@@ -80,6 +80,9 @@ export default function Home({ initialSymptom }) {
     console.error(error);
     return <TitleBar title="Error fetching data" />;
   }
+  const sortedRemedies = [...remedies].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   return (
     <>
@@ -97,7 +100,7 @@ export default function Home({ initialSymptom }) {
         <EmptyMessage>No remedies found</EmptyMessage>
       ) : (
         <CardList
-          elements={remedies}
+          elements={sortedRemedies}
           onBookmarkToggle={handleBookmarkToggle}
           currentPath={currentPath}
         />
