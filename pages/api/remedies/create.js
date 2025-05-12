@@ -1,6 +1,7 @@
 import dbConnect from "@/db/connect";
 import { Remedy } from "@/db/models/Remedy";
 
+const DEFAULT_IMAGE_URL = "https://via.placeholder.com/600x400?text=No+Image";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
@@ -9,8 +10,7 @@ export default async function handler(req, res) {
       if (!title || !ingredients?.length || !symptoms?.length) {
         return res.status(400).json({ status: "Missing required fields" });
       }
-      const DEFAULT_IMAGE_URL =
-        "https://via.placeholder.com/600x400?text=No+Image";
+
       const newRemedy = await Remedy.create({
         title,
         imageUrl: req.body.imageUrl || DEFAULT_IMAGE_URL,

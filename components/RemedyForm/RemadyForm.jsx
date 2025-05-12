@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 
@@ -44,15 +45,7 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
-const Chip = styled.div`
-  display: flex;
-  align-items: center;
-  background: #f0f0f0;
-  padding: 0.4rem 0.6rem;
-  border-radius: 16px;
-  margin: 0.2rem;
-  font-size: 0.9rem;
-`;
+
 const RemoveBtn = styled.button`
   margin-left: 0.5rem;
   background: none;
@@ -61,17 +54,29 @@ const RemoveBtn = styled.button`
   cursor: pointer;
   font-weight: bold;
 `;
-const ChipContainer = styled.div`
+const ChipContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
+  text-decoration: none;
+`;
+const Chip = styled.li`
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 16px;
+  margin: 0.2rem;
+  font-size: 0.9rem;
 `;
 const ErrorText = styled.p`
   color: red;
   font-size: 0.875rem;
 `;
 
-export default function RemedyForm({ symptomsList = [], mode = "create" }) {
+export default function RemedyForm({ mode = "create" }) {
   const router = useRouter();
+  const { data: symptomsList = [], error, isLoading } = useSWR("/api/symptoms");
   const [ingredients, setIngredients] = useState([""]);
   const [symptoms, setSymptoms] = useState([]);
   const [selectedSymptom, setSelectedSymptom] = useState("");
@@ -136,6 +141,11 @@ export default function RemedyForm({ symptomsList = [], mode = "create" }) {
     }
   };
 
+  const canAddIngredient = ingredients[ingredients.length - 1].trim() !== "";
+
+  if (isLoading) return <p>Loading symptoms...</p>;
+  if (error) return <p>Failed to load symptoms.</p>;
+
   return (
     <Form onSubmit={handleSubmit}>
       <Label>
@@ -176,6 +186,7 @@ export default function RemedyForm({ symptomsList = [], mode = "create" }) {
         <Button
           type="button"
           onClick={() => setIngredients([...ingredients, ""])}
+          disabled={!canAddIngredient}
         >
           +
         </Button>
