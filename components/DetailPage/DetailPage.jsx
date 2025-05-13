@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -93,8 +94,56 @@ const StyledList = styled.ul`
   }
 `;
 
+const AllButtons = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease-in-out;
+
+  &.edit {
+    background-color: #1fab89;
+    color: white;
+  }
+
+  &.delete {
+    background-color: #1fab89;
+    color: white;
+  }
+
+  &.confirm {
+    background-color: rgb(92, 41, 134);
+    color: white;
+  }
+
+  &.cancel {
+    background-color: rgb(92, 41, 134);
+    color: white;
+  }
+`;
+
 export default function DetailPage({ element }) {
   const router = useRouter();
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleDelete = async () => {
+    const res = await fetch(`/api/remedies/${element._id}`, {
+      method: "DELETE",
+    });
+    if (res.ok) {
+      router.push("/");
+    } else {
+      alert("Failed to delete remedy.");
+    }
+  };
 
   return (
     <Wrapper>
@@ -166,6 +215,32 @@ export default function DetailPage({ element }) {
               )}
             </StyledList>
           </section>
+
+          <AllButtons>
+            {confirmDelete ? (
+              <>
+                <Button className="confirm" onClick={handleDelete}>
+                  Confirm Delete
+                </Button>
+                <Button
+                  className="cancel"
+                  onClick={() => setConfirmDelete(false)}
+                >
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button className="edit">Edit</Button>
+                <Button
+                  className="delete"
+                  onClick={() => setConfirmDelete(true)}
+                >
+                  Delete
+                </Button>
+              </>
+            )}
+          </AllButtons>
         </Article>
       </Flex>
     </Wrapper>
