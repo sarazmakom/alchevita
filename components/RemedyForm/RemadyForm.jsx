@@ -11,6 +11,7 @@ const Label = styled.label`
   display: flex;
   flex-direction: column;
   font-weight: bold;
+  gap: 0.5rem;
 `;
 const Input = styled.input`
   padding: 0.5rem;
@@ -21,6 +22,7 @@ const Input = styled.input`
     css`
       border-color: red;
     `}
+  height: 40px;
 `;
 const Textarea = styled.textarea`
   padding: 0.5rem;
@@ -68,6 +70,13 @@ const Chip = styled.li`
   margin: 0.2rem;
   font-size: 0.9rem;
 `;
+const Select = styled.select`
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 40px;
+  margin-bottom: 1rem;
+`;
 const ErrorText = styled.p`
   color: red;
   font-size: 0.875rem;
@@ -110,7 +119,7 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
       usage,
       symptoms,
     };
-    await onSubmit(payload);
+    onSubmit(payload);
   };
 
   const handleAddSymptom = () => {
@@ -194,7 +203,7 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
 
       <Label>
         Symptoms *
-        <select
+        <Select
           value={selectedSymptom}
           onChange={(e) => setSelectedSymptom(e.target.value)}
         >
@@ -206,7 +215,7 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
                 {s.name}
               </option>
             ))}
-        </select>
+        </Select>
         <Button
           type="button"
           onClick={handleAddSymptom}
