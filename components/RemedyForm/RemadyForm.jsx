@@ -113,8 +113,15 @@ export default function RemedyForm({ mode = "create" }) {
       symptoms,
     };
 
-    const res = await fetch("/api/remedies/create", {
-      method: "POST",
+    const endpoint =
+      mode === "create"
+        ? "/api/remedies/create"
+        : `/api/remedies/${existingRemedy._id}`;
+
+    const method = mode === "create" ? "POST" : "PATCH";
+
+    const res = await fetch(endpoint, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
