@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 
 const Form = styled.form`
@@ -74,8 +73,7 @@ const ErrorText = styled.p`
   font-size: 0.875rem;
 `;
 
-export default function RemedyForm({ mode = "create" }) {
-  const router = useRouter();
+export default function RemedyForm({ mode = "create", onSubmit }) {
   const { data: symptomsList = [], error, isLoading } = useSWR("/api/symptoms");
   const [ingredients, setIngredients] = useState([""]);
   const [symptoms, setSymptoms] = useState([]);
@@ -112,23 +110,7 @@ export default function RemedyForm({ mode = "create" }) {
       usage,
       symptoms,
     };
-
-    const endpoint =
-      mode === "create"
-        ? "/api/remedies/create"
-        : `/api/remedies/${existingRemedy._id}`;
-
-    const method = mode === "create" ? "POST" : "PATCH";
-
-    const res = await fetch(endpoint, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (res.ok) {
-      router.push("/");
-    }
+    if (onSubmit) await onSubmit(payload);
   };
 
   const handleAddSymptom = () => {
