@@ -110,7 +110,7 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
       usage,
       symptoms,
     };
-    if (onSubmit) await onSubmit(payload);
+    await onSubmit(payload);
   };
 
   const handleAddSymptom = () => {
