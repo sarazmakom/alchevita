@@ -1,6 +1,6 @@
-import { v2 as cloudinary } from "cloudinary";
 import formidable from "formidable";
 import fs from "fs";
+import cloudinary from "@/cloudinary";
 
 export const config = {
   api: {
@@ -10,12 +10,6 @@ export const config = {
 
 const MAX_MB = parseInt(process.env.MAX_UPLOAD_SIZE_MB, 10) || 2;
 const MAX_FILESIZE = MAX_MB * 1024 * 1024;
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
