@@ -109,26 +109,86 @@ const Button = styled.button`
   border: none;
   transition: background 0.2s ease-in-out;
 
-  &.edit {
-    background-color: #1fab89;
-    color: white;
-  }
-
   &.delete {
-    background-color: #1fab89;
+    background-color: rgb(226, 10, 64);
     color: white;
   }
 
   &.confirm {
-    background-color: rgb(92, 41, 134);
+    background-color: rgb(226, 10, 64);
     color: white;
   }
 
   &.cancel {
-    background-color: rgb(92, 41, 134);
-    color: white;
+    background-color: #f8d7da;
+    color: rgb(226, 10, 64);
+    border: 1px solid rgb(235, 151, 159);
+
+    &:hover {
+      background-color: #f1c0c4;
+    }
   }
 `;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+`;
+
+const ModalTitle = styled.h3`
+  margin-bottom: 1rem;
+`;
+
+const ModalText = styled.p`
+  margin-bottom: 2rem;
+  color: #333333;
+`;
+
+const ModalActions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
+function DeleteConfirmationModal({ onCancel, onConfirm }) {
+  return (
+    <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <ModalContent>
+        <ModalTitle id="modal-title">Confirm remedy deletion</ModalTitle>
+        <ModalText id="modal-description">
+          Are you sure you want to delete this remedy? This action cannot be
+          undone.
+        </ModalText>
+        <ModalActions>
+          <Button className="cancel" onClick={onCancel} autoFocus>
+            Cancel
+          </Button>
+          <Button className="confirm" onClick={onConfirm}>
+            Confirm Delete
+          </Button>
+        </ModalActions>
+      </ModalContent>
+    </ModalOverlay>
+  );
+}
 
 export default function DetailPage({ element }) {
   const router = useRouter();
@@ -216,30 +276,16 @@ export default function DetailPage({ element }) {
             </StyledList>
           </section>
 
+          {confirmDelete && (
+            <DeleteConfirmationModal
+              onCancel={() => setConfirmDelete(false)}
+              onConfirm={handleDelete}
+            />
+          )}
           <AllButtons>
-            {confirmDelete ? (
-              <>
-                <Button className="confirm" onClick={handleDelete}>
-                  Confirm Delete
-                </Button>
-                <Button
-                  className="cancel"
-                  onClick={() => setConfirmDelete(false)}
-                >
-                  Cancel
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button className="edit">Edit</Button>
-                <Button
-                  className="delete"
-                  onClick={() => setConfirmDelete(true)}
-                >
-                  Delete
-                </Button>
-              </>
-            )}
+            <Button className="delete" onClick={() => setConfirmDelete(true)}>
+              Delete
+            </Button>
           </AllButtons>
         </Article>
       </Flex>
