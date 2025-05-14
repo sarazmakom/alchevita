@@ -302,7 +302,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
       </Label>
 
       <Button type="submit" disabled={mode === "create" && !imageFile}>
-        {mode === "create" ? "Create Remedy" : "Save Changes"}
+        {mode === "create" ? "Create Remedy" : "Update Remedy"}
       </Button>
     </Form>
   );
