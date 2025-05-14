@@ -246,7 +246,7 @@ export default function DetailPage({ element }) {
         <Aside>
           <Image
             src={element.imageUrl}
-            alt={element.name}
+            alt={`Visual representation of ${element.title}`}
             loading="lazy"
             width={500}
             height={500}

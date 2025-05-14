@@ -46,7 +46,6 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
-
 const RemoveBtn = styled.button`
   margin-left: 0.5rem;
   background: none;
@@ -88,6 +87,11 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
   const [symptoms, setSymptoms] = useState([]);
   const [selectedSymptom, setSelectedSymptom] = useState("");
   const [errors, setErrors] = useState({});
+  const [imageFile, setImageFile] = useState(null);
+  const [imageError, setImageError] = useState("");
+
+  const MAX_UPLOAD_SIZE_MB =
+    parseInt(process.env.NEXT_PUBLIC_MAX_UPLOAD_SIZE_MB, 10) || 2;
 
   const validate = (title, ingredientsList, symptomsList) => {
     const errs = {};
@@ -95,31 +99,8 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
     if (ingredientsList.filter((i) => i.trim()).length < 1)
       errs.ingredients = "At least one ingredient is required.";
     if (symptomsList.length < 1) errs.symptoms = "Select at least one symptom.";
+    if (!imageFile) errs.image = "An image is required.";
     return errs;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const title = formData.get("title") || "";
-    const preparation = formData.get("preparation") || "";
-    const usage = formData.get("usage") || "";
-
-    const validationErrors = validate(title, ingredients, symptoms);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setErrors({});
-
-    const payload = {
-      title,
-      ingredients: ingredients.filter((i) => i.trim()),
-      preparation,
-      usage,
-      symptoms,
-    };
-    onSubmit(payload);
   };
 
   const handleAddSymptom = () => {
@@ -137,6 +118,51 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
     if (newIngredients.some((i) => i.trim())) {
       setErrors((prev) => ({ ...prev, ingredients: undefined }));
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageError("");
+    if (file) {
+      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+        setImageError("Please select a JPG, PNG or WEBP image.");
+        e.target.value = "";
+        setImageFile(null);
+        return;
+      }
+      if (file.size > MAX_UPLOAD_SIZE_MB * 1024 * 1024) {
+        setImageError(`File too large. Max size is ${MAX_UPLOAD_SIZE_MB} MB.`);
+        e.target.value = "";
+        setImageFile(null);
+        return;
+      }
+      setImageFile(file);
+      setErrors((prev) => ({ ...prev, image: undefined }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const title = formData.get("title") || "";
+    const preparation = formData.get("preparation") || "";
+    const usage = formData.get("usage") || "";
+
+    const validationErrors = validate(title, ingredients, symptoms);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+
+    onSubmit({
+      title,
+      ingredients: ingredients.filter((i) => i.trim()),
+      preparation,
+      usage,
+      symptoms,
+      imageFile,
+    });
   };
 
   const canAddIngredient = ingredients[ingredients.length - 1].trim() !== "";
@@ -246,7 +272,20 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
         {errors.symptoms && <ErrorText>{errors.symptoms}</ErrorText>}
       </Label>
 
-      <Button type="submit">
+      <Label>
+        Upload Image *
+        <Input
+          type="file"
+          accept=".jpg,.jpeg,.png,.webp"
+          onChange={handleImageChange}
+          error={!!(errors.image || imageError)}
+        />
+        {(imageError || errors.image) && (
+          <ErrorText>{imageError || errors.image}</ErrorText>
+        )}
+      </Label>
+
+      <Button type="submit" disabled={!imageFile}>
         {mode === "create" ? "Create Remedy" : "Save Changes"}
       </Button>
     </Form>
