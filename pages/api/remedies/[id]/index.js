@@ -37,6 +37,5 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Failed to delete remedy" });
     }
   }
-  res.setHeader("Allow", ["GET", "DELETE"]);
   res.status(405).json({ status: "Method not allowed!" });
 }
