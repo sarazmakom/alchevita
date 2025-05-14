@@ -115,6 +115,11 @@ const Button = styled.button`
     color: white;
   }
 
+  &.edit {
+    background-color: #1fab89;
+    color: white;
+  }
+
   &.confirm {
     background-color: rgb(226, 10, 64);
     color: white;
@@ -295,6 +300,12 @@ export default function DetailPage({ element }) {
             />
           )}
           <AllButtons>
+            <Button
+              className="edit"
+              onClick={() => router.push(`/edit-remedy/${element._id}`)}
+            >
+              Edit
+            </Button>
             <Button className="delete" onClick={() => setConfirmDelete(true)}>
               Delete
             </Button>
