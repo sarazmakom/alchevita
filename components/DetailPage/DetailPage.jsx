@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -169,9 +170,20 @@ const ModalActions = styled.div`
 `;
 
 function DeleteConfirmationModal({ onCancel, onConfirm }) {
+  const modalRef = useRef(null);
+  const handleOverlayClick = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      onCancel();
+    }
+  };
   return (
-    <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <ModalContent>
+    <ModalOverlay
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      onClick={handleOverlayClick}
+    >
+      <ModalContent ref={modalRef}>
         <ModalTitle id="modal-title">Confirm remedy deletion</ModalTitle>
         <ModalText id="modal-description">
           Are you sure you want to delete this remedy? This action cannot be
