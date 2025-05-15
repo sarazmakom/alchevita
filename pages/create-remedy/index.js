@@ -1,5 +1,4 @@
 import RemedyForm from "@/components/RemedyForm/RemedyForm";
-import TitleBar from "@/components/TitleBar/TitleBar";
 import { useRouter } from "next/router";
 
 export default function CreateRemedy() {
@@ -34,8 +33,9 @@ export default function CreateRemedy() {
 
   return (
     <>
-      <TitleBar title="Create New Remedy" />
       <RemedyForm mode="create" onSubmit={handleCreate} />
     </>
   );
 }
+
+CreateRemedy.pageTitle = "Create Remedy";

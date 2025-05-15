@@ -2,10 +2,6 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const LogoLink = styled(Link)`
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 50;
   text-decoration: none;
   width: 48px;
   height: 48px;
