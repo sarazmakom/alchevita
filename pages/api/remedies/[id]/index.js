@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     }
   }
 
-  if (req.method === "PUT") {
+  if (req.method === "PATCH") {
     try {
       const { title, ingredients, preparation, usage, symptoms, imageUrl } =
         req.body;

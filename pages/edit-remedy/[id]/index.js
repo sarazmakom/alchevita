@@ -91,7 +91,7 @@ export default function EditRemedy() {
 
     const payload = { ...formData, imageUrl };
     const res = await fetch(`/api/remedies/${id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
