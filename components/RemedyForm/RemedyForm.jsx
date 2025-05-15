@@ -81,10 +81,14 @@ const ErrorText = styled.p`
   font-size: 0.875rem;
 `;
 
-export default function RemedyForm({ mode = "create", onSubmit }) {
+export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
   const { data: symptomsList = [], error, isLoading } = useSWR("/api/symptoms");
-  const [ingredients, setIngredients] = useState([""]);
-  const [symptoms, setSymptoms] = useState([]);
+  const [ingredients, setIngredients] = useState(
+    initialData?.ingredients || [""]
+  );
+  const [symptoms, setSymptoms] = useState(
+    initialData?.symptoms?.map((s) => s._id) || []
+  );
   const [selectedSymptom, setSelectedSymptom] = useState("");
   const [errors, setErrors] = useState({});
   const [imageFile, setImageFile] = useState(null);
@@ -99,7 +103,7 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
     if (ingredientsList.filter((i) => i.trim()).length < 1)
       errs.ingredients = "At least one ingredient is required.";
     if (symptomsList.length < 1) errs.symptoms = "Select at least one symptom.";
-    if (!imageFile) errs.image = "An image is required.";
+    if (mode === "create" && !imageFile) errs.image = "An image is required.";
     return errs;
   };
 
@@ -174,7 +178,12 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
     <Form onSubmit={handleSubmit}>
       <Label>
         Title *
-        <Input name="title" error={!!errors.title} required />
+        <Input
+          name="title"
+          error={!!errors.title}
+          required
+          defaultValue={initialData?.title}
+        />
         {errors.title && <ErrorText>{errors.title}</ErrorText>}
       </Label>
 
@@ -219,12 +228,16 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
 
       <Label>
         Preparation
-        <Textarea name="preparation" rows={4} />
+        <Textarea
+          name="preparation"
+          rows={4}
+          defaultValue={initialData?.preparation}
+        />
       </Label>
 
       <Label>
         Usage
-        <Textarea name="usage" rows={4} />
+        <Textarea name="usage" rows={4} defaultValue={initialData?.usage} />
       </Label>
 
       <Label>
@@ -273,7 +286,7 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
       </Label>
 
       <Label>
-        Upload Image *
+        Upload Image {mode === "create" && "*"}
         <Input
           type="file"
           accept=".jpg,.jpeg,.png,.webp"
@@ -283,10 +296,13 @@ export default function RemedyForm({ mode = "create", onSubmit }) {
         {(imageError || errors.image) && (
           <ErrorText>{imageError || errors.image}</ErrorText>
         )}
+        {mode === "edit" && initialData?.imageUrl && (
+          <p>Current image will be kept if no new image is uploaded</p>
+        )}
       </Label>
 
-      <Button type="submit" disabled={!imageFile}>
-        {mode === "create" ? "Create Remedy" : "Save Changes"}
+      <Button type="submit" disabled={mode === "create" && !imageFile}>
+        {mode === "create" ? "Create Remedy" : "Update Remedy"}
       </Button>
     </Form>
   );
