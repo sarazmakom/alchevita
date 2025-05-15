@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }) {
       <RootStyle />
       <GlobalStyle />
       <SWRConfig value={{ fetcher }}>
-        <Layout>
+        <Layout title={Component.pageTitle}>
           <Component {...pageProps} />
         </Layout>
       </SWRConfig>

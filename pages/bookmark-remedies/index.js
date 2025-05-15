@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import styled from "styled-components";
 import CardList from "@/components/CardList/CardList";
-import TitleBar from "@/components/TitleBar/TitleBar";
 import RemedyFilter from "@/components/RemedyFilter/RemedyFilter";
 import { useBookmarks } from "@/hooks/useBookmarks";
 
@@ -81,16 +80,14 @@ export default function Home({ initialSymptom }) {
     }
   };
 
-  if (isLoading) return <TitleBar title="Loading..." />;
+  if (isLoading) return <EmptyMessage title="Loading..." />;
   if (error) {
     console.error(error);
-    return <TitleBar title="Error fetching data" />;
+    return <EmptyMessage title="Error fetching data" />;
   }
 
   return (
     <>
-      <TitleBar title={"My Remedies"} />
-
       {currentPath === "/bookmark-remedies" && (
         <RemedyFilter
           selectedSymptom={selectedSymptom}
@@ -111,6 +108,8 @@ export default function Home({ initialSymptom }) {
     </>
   );
 }
+
+Home.pageTitle = "My Remedies";
 
 export async function getServerSideProps({ query }) {
   return {

@@ -1,20 +1,17 @@
-import Head from "next/head";
+import React from "react";
 import styled from "styled-components";
+import Header from "../Header/Header";
 import Navbar from "../Navbar/Navbar";
-import Logo from "../Logo/Logo";
 
 const MainContent = styled.main`
   padding-bottom: 5rem;
   padding-top: 4rem;
 `;
 
-export default function Layout({ children }) {
+export default function Layout({ title = "", children }) {
   return (
     <>
-      <Head>
-        <title>Alchevita</title>
-      </Head>
-      <Logo />
+      <Header title={title} />
       <MainContent>{children}</MainContent>
       <Navbar />
     </>
