@@ -27,6 +27,7 @@ const LogButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 100px;
 
   &:hover {
     background-color: #178066;
