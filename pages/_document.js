@@ -27,6 +27,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -44,7 +45,6 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="/favicon-16x16.png"
           />
-          <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />
