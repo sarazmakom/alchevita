@@ -1,4 +1,5 @@
 import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import Logo from "../Logo/Logo";
 import TitleBar from "../TitleBar/TitleBar";
 import styled from "styled-components";
@@ -17,12 +18,31 @@ const HeaderContainer = styled.header`
   z-index: 9999;
 `;
 
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const UserName = styled.span`
+  font-weight: 500;
+`;
+
 export default function Header({ title }) {
+  const { data: session } = useSession();
+
   return (
     <HeaderContainer>
       <Logo />
       <TitleBar title={title} />
-      <button>Log In</button> {/*Only for Acceptance Criteria*/}
+      {session ? (
+        <UserInfo>
+          <UserName>{session.user.name}</UserName>
+          <button onClick={() => signOut()}>Log Out</button>
+        </UserInfo>
+      ) : (
+        <button onClick={() => signIn("github")}>Log In</button>
+      )}
     </HeaderContainer>
   );
 }
