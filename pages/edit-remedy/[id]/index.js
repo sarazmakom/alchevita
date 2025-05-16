@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import RemedyForm from "@/components/RemedyForm/RemedyForm";
-import TitleBar from "@/components/TitleBar/TitleBar";
 import styled from "styled-components";
 import { useState } from "react";
 
@@ -116,13 +115,12 @@ export default function EditRemedy() {
     }
   };
 
-  if (isLoading) return <TitleBar title="Loading..." />;
-  if (error) return <TitleBar title="Error loading remedy" />;
-  if (!remedy) return <TitleBar title="Remedy not found" />;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading remedy</p>;
+  if (!remedy) return <p>Remedy not found</p>;
 
   return (
     <>
-      <TitleBar title="Edit Remedy" />
       <RemedyForm mode="edit" onSubmit={handleEdit} initialData={remedy} />
       <ButtonContainer>
         <Button className="cancel" onClick={handleCancel}>
@@ -133,3 +131,5 @@ export default function EditRemedy() {
     </>
   );
 }
+
+EditRemedy.pageTitle = "Edit Remedy";

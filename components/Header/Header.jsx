@@ -13,8 +13,9 @@ const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 2rem;
   background-color: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
   z-index: 9999;
 `;
 
@@ -28,6 +29,27 @@ const UserName = styled.span`
   font-weight: 500;
 `;
 
+const LogButton = styled.button`
+  background-color: #1fab89;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100px;
+
+  &:hover {
+    background-color: #178066;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
 export default function Header({ title }) {
   const { data: session } = useSession();
 
@@ -38,10 +60,10 @@ export default function Header({ title }) {
       {session ? (
         <UserInfo>
           <UserName>{session.user.name}</UserName>
-          <button onClick={() => signOut()}>Log Out</button>
+          <LogButton onClick={() => signOut()}>Log Out</LogButton>
         </UserInfo>
       ) : (
-        <button onClick={() => signIn("github")}>Log In</button>
+        <LogButton onClick={() => signIn("github")}>Log In</LogButton>
       )}
     </HeaderContainer>
   );
