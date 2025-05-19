@@ -1,8 +1,10 @@
-import React from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import React, { useState } from "react";
+import { useSession } from "next-auth/react";
 import Logo from "../Logo/Logo";
 import TitleBar from "../TitleBar/TitleBar";
 import styled from "styled-components";
+import { Menu } from "lucide-react";
+import SlideInMenu from "../SlideInMenu/SlideInMenu";
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -19,52 +21,33 @@ const HeaderContainer = styled.header`
   z-index: 9999;
 `;
 
-const UserInfo = styled.div`
+const MenuButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #333;
   display: flex;
   align-items: center;
-  gap: 1rem;
-`;
-
-const UserName = styled.p`
-  font-weight: 500;
-`;
-
-const LogButton = styled.button`
-  background-color: #1fab89;
-  color: black;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100px;
+  justify-content: center;
 
   &:hover {
-    background-color: #178066;
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    color: #666;
   }
 `;
 
 export default function Header({ title }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
 
   return (
     <HeaderContainer>
       <Logo />
       <TitleBar title={title} />
-      {session ? (
-        <UserInfo>
-          <UserName>{session.user.name}</UserName>
-          <LogButton onClick={() => signOut()}>Log Out</LogButton>
-        </UserInfo>
-      ) : (
-        <LogButton onClick={() => signIn("github")}>Log In</LogButton>
-      )}
+      <MenuButton onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
+        <Menu size={24} />
+      </MenuButton>
+      <SlideInMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </HeaderContainer>
   );
 }
