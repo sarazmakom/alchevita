@@ -5,13 +5,13 @@ import styled from "styled-components";
 import CardList from "@/components/CardList/CardList";
 import RemedyFilter from "@/components/RemedyFilter/RemedyFilter";
 import { useBookmarks } from "@/hooks/useBookmarks";
+import { getSession } from "next-auth/react";
 
 const EmptyMessage = styled.p`
   margin: 2rem 0;
   text-align: center;
   color: #666;
 `;
-
 export default function Home({ initialSymptom }) {
   const router = useRouter();
   const [selectedSymptom, setSelectedSymptom] = useState(initialSymptom || "");
@@ -111,10 +111,24 @@ export default function Home({ initialSymptom }) {
 
 Home.pageTitle = "My Remedies";
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const initialSymptom = context.query.symptom || "";
+
   return {
     props: {
-      initialSymptom: query.symptom || "",
+      session,
+      initialSymptom,
     },
   };
 }

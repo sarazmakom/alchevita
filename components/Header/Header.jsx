@@ -60,7 +60,9 @@ export default function Header({ title }) {
       {session ? (
         <UserInfo>
           <UserName>{session.user.name}</UserName>
-          <LogButton onClick={() => signOut()}>Log Out</LogButton>
+          <LogButton onClick={() => signOut({ callbackUrl: "/" })}>
+            Log Out
+          </LogButton>
         </UserInfo>
       ) : (
         <LogButton onClick={() => signIn("github")}>Log In</LogButton>
