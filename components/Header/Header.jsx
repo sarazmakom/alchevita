@@ -25,7 +25,7 @@ const UserInfo = styled.div`
   gap: 1rem;
 `;
 
-const UserName = styled.span`
+const UserName = styled.p`
   font-weight: 500;
 `;
 
