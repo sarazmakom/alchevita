@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import dbConnect from "@/db/connect";
+import { Remedy } from "@/db/models/Remedy";
 import RemedyForm from "@/components/RemedyForm/RemedyForm";
 import styled from "styled-components";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { useState } from "react";
 
 const ButtonContainer = styled.div`
@@ -60,18 +63,12 @@ const Toast = styled.div`
   }
 `;
 
-export default function EditRemedy() {
+export default function EditRemedy({ remedy }) {
   const router = useRouter();
-  const { id } = router.query;
-  const {
-    data: remedy,
-    isLoading,
-    error,
-  } = useSWR(id ? `/api/remedies/${id}` : null);
   const [showToast, setShowToast] = useState(false);
 
   async function handleEdit(formData) {
-    let imageUrl = remedy.imageUrl; // Keep existing image by default
+    let imageUrl = remedy.imageUrl;
 
     if (formData.imageFile) {
       const fd = new FormData();
@@ -89,7 +86,7 @@ export default function EditRemedy() {
     }
 
     const payload = { ...formData, imageUrl };
-    const res = await fetch(`/api/remedies/${id}`, {
+    const res = await fetch(`/api/remedies/${remedy._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -98,8 +95,8 @@ export default function EditRemedy() {
     if (res.ok) {
       setShowToast(true);
       setTimeout(() => {
-        router.push(`/remedies/${id}`);
-      }, 1500); // Show toast for 1.5 seconds before redirecting
+        router.push(`/remedies/${remedy._id}`);
+      }, 1500);
     } else {
       alert("Failed to update remedy");
     }
@@ -111,13 +108,9 @@ export default function EditRemedy() {
         "Are you sure you want to cancel? Any unsaved changes will be lost."
       )
     ) {
-      router.push(`/remedies/${id}`);
+      router.push(`/remedies/${remedy._id}`);
     }
   };
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading remedy</p>;
-  if (!remedy) return <p>Remedy not found</p>;
 
   return (
     <>
@@ -132,4 +125,49 @@ export default function EditRemedy() {
   );
 }
 
-EditRemedy.pageTitle = "Edit Remedy";
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  await dbConnect();
+  const remedyDoc = await Remedy.findById(context.params.id)
+    .populate("symptoms")
+    .lean();
+  if (!remedyDoc) {
+    return { notFound: true };
+  }
+
+  const isOwner = remedyDoc.ownerId?.toString() === session.user.id;
+  if (!isOwner) {
+    return {
+      redirect: { destination: "/", permanent: false },
+    };
+  }
+
+  // Serialize fields
+  const remedy = {
+    _id: remedyDoc._id.toString(),
+    title: remedyDoc.title,
+    imageUrl: remedyDoc.imageUrl,
+    ingredients: remedyDoc.ingredients,
+    preparation: remedyDoc.preparation || "",
+    usage: remedyDoc.usage || "",
+    ownerId: remedyDoc.ownerId.toString(),
+    symptoms: remedyDoc.symptoms.map((s) => ({
+      _id: s._id.toString(),
+      name: s.name,
+    })),
+  };
+
+  return {
+    props: { remedy },
+  };
+}
