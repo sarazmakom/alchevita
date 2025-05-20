@@ -36,6 +36,18 @@ const MenuButton = styled.button`
   }
 `;
 
+const UserSection = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const UserName = styled.span`
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
+`;
+
 export default function Header({ title }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
@@ -44,9 +56,12 @@ export default function Header({ title }) {
     <HeaderContainer>
       <Logo />
       <TitleBar title={title} />
-      <MenuButton onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
-        <Menu size={24} />
-      </MenuButton>
+      <UserSection>
+        {session?.user?.name && <UserName>{session.user.name}</UserName>}
+        <MenuButton onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
+          <Menu size={24} />
+        </MenuButton>
+      </UserSection>
       <SlideInMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </HeaderContainer>
   );
