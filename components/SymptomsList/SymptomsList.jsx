@@ -12,7 +12,7 @@ const StyledSymptomsList = styled.ul`
 `;
 
 const SymptomPill = styled(Link)`
-  background-color: rgb(226, 228, 232);
+  background-color: white;
   border-radius: 1rem;
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
