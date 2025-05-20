@@ -6,8 +6,8 @@ const FilterWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #d7fbe8;
   padding: 1rem 2rem;
+  background-color: var(--background);
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(155, 255, 255, 0.1);
   max-width: 800px;
@@ -31,17 +31,17 @@ const Select = styled.select`
   background-size: 1.5rem;
 
   &:focus {
-    border-color: #1fab89;
+    border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(31, 171, 137, 0.2);
   }
 
   &:hover {
-    border-color: #62d2a2;
+    border-color: var(--secondary);
   }
 `;
 
 const ClearButton = styled.button`
-  background: #1fab89;
+  background: var(--primary);
   border: none;
   cursor: pointer;
   font-size: 1rem;
@@ -55,7 +55,7 @@ const ClearButton = styled.button`
   transition: all 0.2s ease;
 
   &:hover {
-    background: #0e6f5d;
+    background: var(--text-dark);
     transform: scale(1.05);
   }
 
