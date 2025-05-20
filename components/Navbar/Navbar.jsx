@@ -2,6 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { House, Heart, SquarePlus } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 const NavContainer = styled.nav`
   position: fixed;
@@ -27,6 +28,7 @@ const NavItem = styled(Link)`
 `;
 
 export default function Navbar() {
+  const { data: session } = useSession();
   const router = useRouter();
 
   return (
@@ -34,18 +36,22 @@ export default function Navbar() {
       <NavItem href="/" isActive={router.pathname === "/"}>
         <House size={24} />
       </NavItem>
-      <NavItem
-        href="/bookmark-remedies"
-        isActive={router.pathname === "/bookmark-remedies"}
-      >
-        <Heart size={24} />
-      </NavItem>
-      <NavItem
-        href="/create-remedy"
-        isActive={router.pathname === "/create-remedy"}
-      >
-        <SquarePlus size={24} />
-      </NavItem>
+      {session && (
+        <>
+          <NavItem
+            href="/bookmark-remedies"
+            isActive={router.pathname === "/bookmark-remedies"}
+          >
+            <Heart size={24} />
+          </NavItem>
+          <NavItem
+            href="/create-remedy"
+            isActive={router.pathname === "/create-remedy"}
+          >
+            <SquarePlus size={24} />
+          </NavItem>
+        </>
+      )}
     </NavContainer>
   );
 }

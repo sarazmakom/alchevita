@@ -104,7 +104,7 @@ export default function SlideInMenu({ isOpen, onClose }) {
             <>
               <MenuItem
                 onClick={() => {
-                  signOut();
+                  signOut({ callbackUrl: "/" });
                   handleMenuItemClick();
                 }}
               >
