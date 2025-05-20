@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 
   // ─── PROTECT DELETE & PATCH ─────────────────────────────────────────────────
   // Require valid session
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
   if (!session) {
     return res.status(401).json({ status: "Unauthorized" });
   }
