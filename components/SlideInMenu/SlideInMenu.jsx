@@ -15,7 +15,7 @@ const MenuOverlay = styled.div`
   transition: opacity 0.3s ease-in-out;
 `;
 
-const MenuContainer = styled.div`
+const MenuContainer = styled.nav`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -29,6 +29,7 @@ const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 12px 12px 0 0;
+  transition: opacity 0.3s ease-in-out;
 `;
 
 const CloseButton = styled.button`
