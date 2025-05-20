@@ -21,7 +21,7 @@ export default function Detail() {
     return <div>Internal Server Error!</div>;
   }
 
-  const isOwner = session?.user?.id === remedy.ownerId;
+  const isOwner = session?.user?.id === remedy?.ownerId;
 
   return <DetailPage element={remedy} isOwner={isOwner} />;
 }
