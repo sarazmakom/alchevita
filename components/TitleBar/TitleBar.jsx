@@ -5,7 +5,7 @@ const Headline = styled.h1`
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  color:rgb(0, 0, 0); 
+  color: var(--text-dark);
   margin: 0;
   padding: 0 1rem;
   white-space: nowrap;
