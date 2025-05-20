@@ -18,6 +18,7 @@ const remedySchema = new Schema({
     required: true,
     min: [1, "At least one symptom ID is required."], // Ensures non-empty array
   },
+  ownerId: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const Remedy = mongoose.models.Remedy || mongoose.model("Remedy", remedySchema);
