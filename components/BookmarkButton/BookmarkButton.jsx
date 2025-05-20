@@ -9,7 +9,7 @@ const BookmarkButton = styled.button`
   background: transparent;
   border: none;
   padding: 0;
-  margin: 1rem;
+  margin: 2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
