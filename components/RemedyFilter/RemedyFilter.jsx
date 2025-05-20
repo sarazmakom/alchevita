@@ -15,8 +15,8 @@ const FilterWrapper = styled.section`
 `;
 
 const Select = styled.select`
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
   border: 1px solid #e5e7eb;
   background-color: white;
   font-size: 1rem;
@@ -75,7 +75,7 @@ export default function RemedyFilter({ selectedSymptom, onSelect, onClear }) {
         value={selectedSymptom}
         onChange={(e) => onSelect(e.target.value)}
       >
-        <option value="">Choose symptom</option>
+        <option value="">Select symptom</option>
         {symptoms.map((symptom) => (
           <option key={symptom._id} value={symptom.name}>
             {symptom.name}
