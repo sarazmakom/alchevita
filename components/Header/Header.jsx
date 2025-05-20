@@ -42,10 +42,11 @@ const UserSection = styled.nav`
   gap: 1rem;
 `;
 
-const UserName = styled.span`
+const UserName = styled.strong`
   font-size: 0.9rem;
   color: #333;
   font-weight: 500;
+  display: block;
 `;
 
 export default function Header({ title }) {
