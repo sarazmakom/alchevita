@@ -6,7 +6,7 @@ const FilterWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2rem;
+  padding: 1rem;
   background-color: var(--background);
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(155, 255, 255, 0.1);
@@ -17,7 +17,7 @@ const FilterWrapper = styled.section`
 const Select = styled.select`
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid white;
   background-color: white;
   font-size: 1rem;
   color: var(--text-dark);
@@ -36,7 +36,7 @@ const Select = styled.select`
   }
 
   &:hover {
-    border-color: var(--secondary);
+    border-color: var(--text-dark);
   }
 `;
 
