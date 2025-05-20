@@ -9,7 +9,7 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
-    font-family: 'Manrope', system-ui, sans-serif;
+    font-family: 'Manrope', system-ui, Arial, sans-serif;
     background-color: var(--background);
   }
 
