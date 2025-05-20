@@ -9,7 +9,7 @@ const CardContainer = styled.li`
   position: relative; /* <-- ensure absolute children (bookmark) are positioned correctly */
   border: 1px solid black;
   border-radius: 0.8rem;
-  padding: 0.5rem;
+  padding: 1.5rem;
 `;
 
 const ImageContainer = styled.div`
