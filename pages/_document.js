@@ -27,6 +27,10 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+            rel="stylesheet"
+          />
           <link rel="icon" href="/favicon.ico" sizes="any" />
           <link
             rel="apple-touch-icon"
