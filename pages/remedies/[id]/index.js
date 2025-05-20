@@ -16,12 +16,17 @@ export default function Detail() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (error) {
     console.error("Error while fetching index page:", error);
     return <div>Internal Server Error!</div>;
   }
 
-  const isOwner = session?.user?.id === remedy?.ownerId;
+  if (!remedy) {
+    return <div>Remedy not found...</div>;
+  }
+
+  const isOwner = session?.user?.id === remedy.ownerId;
 
   return <DetailPage element={remedy} isOwner={isOwner} />;
 }
