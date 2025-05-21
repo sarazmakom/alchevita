@@ -207,7 +207,7 @@ function DeleteConfirmationModal({ onCancel, onConfirm }) {
   );
 }
 
-export default function DetailPage({ element }) {
+export default function DetailPage({ element, isOwner }) {
   const router = useRouter();
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -299,17 +299,19 @@ export default function DetailPage({ element }) {
               onConfirm={handleDelete}
             />
           )}
-          <AllButtons>
-            <Button
-              className="edit"
-              onClick={() => router.push(`/edit-remedy/${element._id}`)}
-            >
-              Edit
-            </Button>
-            <Button className="delete" onClick={() => setConfirmDelete(true)}>
-              Delete
-            </Button>
-          </AllButtons>
+          {isOwner && (
+            <AllButtons>
+              <Button
+                className="edit"
+                onClick={() => router.push(`/edit-remedy/${element._id}`)}
+              >
+                Edit
+              </Button>
+              <Button className="delete" onClick={() => setConfirmDelete(true)}>
+                Delete
+              </Button>
+            </AllButtons>
+          )}
         </Article>
       </Flex>
     </Wrapper>

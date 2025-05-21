@@ -10,44 +10,58 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+
   secret: process.env.NEXTAUTH_SECRET,
+
   pages: {
     signIn: "/auth/signin",
   },
+
   callbacks: {
+    // 1) On initial sign-in, look up (or create) the user in Mongo and stash their _id
     async signIn({ user, account, profile }) {
       if (account.provider === "github") {
         try {
           await dbConnect();
-          const existingUser = await User.findOne({ githubId: profile.id });
 
-          if (!existingUser) {
-            await User.create({
+          let userDoc = await User.findOne({ githubId: profile.id });
+          if (!userDoc) {
+            userDoc = await User.create({
               email: user.email,
               name: user.name,
               githubId: profile.id,
             });
           }
 
-          return true;
-        } catch (error) {
-          console.error("Error saving user to database:", error);
+          // Attach our MongoDB _id to the NextAuth user object
+          user.id = userDoc._id.toString();
+        } catch (err) {
+          console.error("Error saving user to database:", err);
           return false;
         }
       }
       return true;
     },
-    async session({ session, token }) {
-      return session;
-    },
-    async jwt({ token, user, account }) {
-      if (account && user) {
-        return {
-          ...token,
-          accessToken: account.access_token,
-        };
+
+    // 2) Whenever a JWT is created or updated, persist that `user.id` onto the token
+    async jwt({ token, user }) {
+      if (user?.id) {
+        token.userId = user.id;
       }
       return token;
+    },
+
+    // 3) When session() is called (client‑side), merge token.userId into session.user.id
+    async session({ session, token }) {
+      // session.user => { name, email, image }
+      // token.userId => our Mongo _id
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.userId,
+        },
+      };
     },
   },
 };

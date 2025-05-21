@@ -47,13 +47,11 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: "/auth/login",
+        destination: "/",
         permanent: false,
       },
     };
   }
 
-  return {
-    props: { session },
-  };
+  return { props: { session } };
 }
