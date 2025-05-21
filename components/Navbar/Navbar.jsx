@@ -9,8 +9,8 @@ const NavContainer = styled.nav`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: white;
-  border-top: 1px solid #e5e7eb;
+  background-color: var(--background);
+  border-top: 1px solid var(--text-dark);
   padding: 1rem;
   display: flex;
   justify-content: space-around;
@@ -22,7 +22,7 @@ const NavItem = styled(Link)`
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: ${({ isActive }) => (isActive ? "#1971c2" : "#6b7280")};
+  color: ${({ isActive }) => (isActive ? "#0E6F5D" : "#6b7280")};
   width: 24px;
   height: 24px;
 `;
