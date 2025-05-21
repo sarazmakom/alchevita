@@ -16,9 +16,10 @@ const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  background-color: white;
+  background-color: var(--background);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
   z-index: 9999;
+  border-bottom: 1px solid var(--text-dark);
 `;
 
 const MenuButton = styled.button`
@@ -26,7 +27,7 @@ const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  color: #333;
+  color: var(--text-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +45,7 @@ const UserSection = styled.nav`
 
 const UserName = styled.strong`
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-dark);
   font-weight: 500;
   display: block;
 `;
@@ -60,7 +61,7 @@ export default function Header({ title }) {
       <UserSection>
         {session?.user?.name && <UserName>{session.user.name}</UserName>}
         <MenuButton onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
-          <Menu size={24} />
+          <Menu size={32} />
         </MenuButton>
       </UserSection>
       <SlideInMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
