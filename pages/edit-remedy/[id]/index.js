@@ -1,12 +1,10 @@
 import { useRouter } from "next/router";
 import dbConnect from "@/db/connect";
-import { Remedy } from "@/db/models/Remedy";
 import RemedyForm from "@/components/RemedyForm/RemedyForm";
 import styled from "styled-components";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { useState } from "react";
-import "@/db/models/Symptom";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -137,6 +135,10 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const mongoose = (await import("mongoose")).default;
+  const { Remedy } = await import("@/db/models/Remedy");
+  await import("@/db/models/Symptom"); // registers Symptom schema for populate
 
   await dbConnect();
   const remedyDoc = await Remedy.findById(context.params.id)
