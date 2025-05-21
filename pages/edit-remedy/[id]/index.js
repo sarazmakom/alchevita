@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { useState } from "react";
+import "@/db/models/Symptom";
 
 const ButtonContainer = styled.div`
   display: flex;
