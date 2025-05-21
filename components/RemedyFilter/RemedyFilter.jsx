@@ -7,7 +7,6 @@ const FilterWrapper = styled.section`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background-color: var(--background);
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(155, 255, 255, 0.1);
   max-width: 800px;
@@ -20,6 +19,8 @@ const Select = styled.select`
   border: 1px solid white;
   background-color: white;
   font-size: 1rem;
+  font-family: Manrope;
+  background-color: var(--background);
   color: var(--text-dark);
   min-width: 250px;
   outline: none;
