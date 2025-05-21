@@ -13,7 +13,7 @@ const Headline = styled.h1`
   text-overflow: ellipsis;
 
   @media (min-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
