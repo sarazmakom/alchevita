@@ -10,6 +10,7 @@ const CardContainer = styled.li`
   border: 1px solid black;
   border-radius: 0.8rem;
   padding: 1.5rem;
+  background-color: var(--background);
 `;
 
 const ImageContainer = styled.div`
