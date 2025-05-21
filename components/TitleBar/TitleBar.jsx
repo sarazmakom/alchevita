@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Headline = styled.h1`
   width: 100%;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-dark);
   margin: 0;
@@ -13,7 +13,7 @@ const Headline = styled.h1`
   text-overflow: ellipsis;
 
   @media (min-width: 768px) {
-    font-size: 1rem;
+    font-size: 2rem;
   }
 `;
 
