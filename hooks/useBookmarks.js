@@ -4,16 +4,6 @@ export function useBookmarks() {
   const { mutate } = useSWRConfig();
 
   const toggle = async (remedyId, isBookmarked, currentPath) => {
-    console.log("TOGGLE START", {
-      remedyId,
-      isBookmarked,
-      currentPath,
-    });
-    // 2. Get current cache keys to revalidate
-    const baseKey =
-      currentPath === "/bookmark-remedies"
-        ? "/api/remedies?bookmarked=true"
-        : "/api/remedies";
     try {
       // 1. Prepare API call
       const method = isBookmarked ? "DELETE" : "POST";
@@ -21,6 +11,12 @@ export function useBookmarks() {
         method === "DELETE"
           ? `/api/bookmark-remedies/${remedyId}`
           : "/api/bookmark-remedies";
+
+      // 2. Get current cache keys to revalidate
+      const baseKey =
+        currentPath === "/bookmark-remedies"
+          ? "/api/remedies?bookmarked=true"
+          : "/api/remedies";
 
       // 3. Optimistic update pattern
       const optimisticUpdate = (data) => {

@@ -2,6 +2,7 @@ import dbConnect from "@/db/connect";
 import { BookmarkRemedy } from "@/db/models/BookmarkRemedy";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   try {
@@ -45,8 +46,12 @@ export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
       const { remedy } = req.body;
-      await BookmarkRemedy.create({ user: userId, remedy });
-
+      const userObjectId = new mongoose.Types.ObjectId(userId);
+      const remedyObjectId = new mongoose.Types.ObjectId(remedy);
+      await BookmarkRemedy.create({
+        user: userObjectId,
+        remedy: remedyObjectId,
+      });
       res.status(201).json({ status: "Remedy bookmark created" });
       return;
     }
