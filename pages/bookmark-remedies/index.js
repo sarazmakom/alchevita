@@ -12,7 +12,7 @@ const EmptyMessage = styled.p`
   text-align: center;
   color: #666;
 `;
-export default function Home({ initialSymptom }) {
+export default function BookmarkedPage({ initialSymptom }) {
   const router = useRouter();
   const [selectedSymptom, setSelectedSymptom] = useState(initialSymptom || "");
   const currentPath = router.pathname;
@@ -109,7 +109,7 @@ export default function Home({ initialSymptom }) {
   );
 }
 
-Home.pageTitle = "My Remedies";
+BookmarkedPage.pageTitle = "My Remedies";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -117,7 +117,7 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: "/auth/login",
+        destination: "/",
         permanent: false,
       },
     };

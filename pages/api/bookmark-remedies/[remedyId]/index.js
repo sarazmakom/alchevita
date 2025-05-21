@@ -1,6 +1,7 @@
 import dbConnect from "@/db/connect";
 import { BookmarkRemedy } from "@/db/models/BookmarkRemedy";
 import mongoose from "mongoose";
+import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
   const { remedyId } = req.query;
@@ -11,7 +12,6 @@ export default async function handler(req, res) {
       error: "BAD_REQUEST",
     });
   }
-
   try {
     await dbConnect();
   } catch (dbError) {
@@ -22,22 +22,36 @@ export default async function handler(req, res) {
     });
   }
 
+  const session = await getSession({ req });
+
+  if (!session) {
+    return res.status(401).json({
+      status: "Unauthorized",
+      error: "LOGIN_REQUIRED",
+    });
+  }
+
+  const userId = session.user.id;
+
   if (req.method === "DELETE") {
     try {
-      const deletedBookmark = await BookmarkRemedy.findOneAndDelete({
-        remedyId: remedyId,
+      const bookmark = await BookmarkRemedy.findOne({
+        user: userId,
+        remedy: remedyId,
       });
 
-      if (!deletedBookmark) {
+      if (!bookmark) {
         return res.status(404).json({
-          status: "Bookmark not found",
+          status: "Bookmark not found or not owned by user",
           error: "NOT_FOUND",
         });
       }
 
+      await BookmarkRemedy.findByIdAndDelete(bookmark._id);
+
       return res.status(200).json({
         status: "Bookmark successfully deleted",
-        deletedId: deletedBookmark._id,
+        deletedId: bookmark._id,
       });
     } catch (deleteError) {
       console.error("Delete operation failed:", deleteError);

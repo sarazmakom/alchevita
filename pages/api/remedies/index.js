@@ -1,8 +1,14 @@
 import dbConnect from "@/db/connect";
 import { Remedy } from "@/db/models/Remedy";
 import { Symptom } from "@/db/models/Symptom";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
+import mongoose from "mongoose";
 
+const ObjectId = mongoose.Types.ObjectId;
 export default async function handler(req, res) {
+  const session = await getServerSession(req, res, authOptions);
+  const userId = session?.user?.id;
   try {
     await dbConnect();
 
@@ -26,8 +32,21 @@ export default async function handler(req, res) {
       {
         $lookup: {
           from: "bookmarkremedies",
-          localField: "_id",
-          foreignField: "remedyId",
+          let: { remedyId: "$_id" },
+          pipeline: userId
+            ? [
+                {
+                  $match: {
+                    $expr: {
+                      $and: [
+                        { $eq: ["$remedy", "$$remedyId"] },
+                        { $eq: ["$user", new ObjectId(userId)] },
+                      ],
+                    },
+                  },
+                },
+              ]
+            : [],
           as: "bookmarkInfo",
         },
       },
