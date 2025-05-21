@@ -23,23 +23,24 @@ export default function Card({ remedy, currentPath }) {
   const { toggle } = useBookmarks();
   return (
     <CardContainer>
-      <BookMarkButton
-        bookmarked={remedy.isBookmarked}
-        onToggle={() => toggle(remedy._id, remedy.isBookmarked, currentPath)}
-      />
-      <Link
-        href={`remedies/${remedy._id}`}
-        aria-label={`View details for ${remedy.title}`}
-      >
-        <ImageContainer>
+      <ImageContainer>
+        <BookMarkButton
+          bookmarked={remedy.isBookmarked}
+          onToggle={() => toggle(remedy._id, remedy.isBookmarked, currentPath)}
+        />
+        <Link
+          href={`remedies/${remedy._id}`}
+          aria-label={`View details for ${remedy.title}`}
+        >
           <StyledImage
             src={remedy.imageUrl}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             alt={`Visual representation of ${remedy.title}`}
           />
-        </ImageContainer>
-      </Link>
+        </Link>
+      </ImageContainer>
+
       <h3>{remedy.title}</h3>
       <SymptomsList symptoms={remedy.symptoms} currentPath={currentPath} />
     </CardContainer>
