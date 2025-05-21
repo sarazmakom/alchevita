@@ -14,9 +14,17 @@ const Label = styled.label`
   gap: 0.5rem;
 `;
 const Input = styled.input`
-  padding: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+
+  &:focus {
+    border-color: var(--primary, #38b2ac);
+    box-shadow: 0 0 0 2px rgba(56, 178, 172, 0.2);
   ${(props) =>
     props.error &&
     css`
@@ -25,9 +33,19 @@ const Input = styled.input`
   height: 40px;
 `;
 const Textarea = styled.textarea`
-  padding: 0.5rem;
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+
+  &:focus {
+    border-color: var(--primary, #38b2ac);
+    box-shadow: 0 0 0 2px rgba(56, 178, 172, 0.2);
+  }
   ${(props) =>
     props.error &&
     css`
@@ -69,12 +87,33 @@ const Chip = styled.li`
   margin: 0.2rem;
   font-size: 0.9rem;
 `;
+
 const Select = styled.select`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 40px;
-  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid white;
+  background-color: white;
+  font-size: 1rem;
+  font-family: Manrope;
+  background-color: var(--background);
+  color: var(--text-dark);
+  min-width: 250px;
+  outline: none;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231fab89'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 2rem;
+
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(31, 171, 137, 0.2);
+  }
+
+  &:hover {
+    border-color: var(--text-dark);
+  }
 `;
 const ErrorText = styled.p`
   color: red;
