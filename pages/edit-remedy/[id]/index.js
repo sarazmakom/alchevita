@@ -6,38 +6,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { useState } from "react";
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding: 0 1rem;
-`;
-
-const Button = styled.button`
-  padding: 0.75rem 1.5rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  border: none;
-  transition: background 0.2s ease-in-out;
-
-  &.update {
-    background-color: #1fab89;
-    color: white;
-  }
-
-  &.cancel {
-    background-color: #f8d7da;
-    color: rgb(226, 10, 64);
-    border: 1px solid rgb(235, 151, 159);
-
-    &:hover {
-      background-color: #f1c0c4;
-    }
-  }
-`;
-
 const Toast = styled.div`
   position: fixed;
   bottom: 2rem;
@@ -114,11 +82,7 @@ export default function EditRemedy({ remedy }) {
   return (
     <>
       <RemedyForm mode="edit" onSubmit={handleEdit} initialData={remedy} />
-      <ButtonContainer>
-        <Button className="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>
-      </ButtonContainer>
+
       {showToast && <Toast>Remedy updated successfully!</Toast>}
     </>
   );

@@ -121,7 +121,6 @@ const RemoveBtn = styled.button`
   }
 `;
 
-
 const Select = styled.select`
   padding: 0.5rem 1rem;
   border-radius: 1rem;
@@ -238,6 +237,41 @@ const SymptomPill = styled.li`
   box-shadow: 0 1px 2px 0 var(--primary);
 `;
 
+const ButtonContainer = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const ActionButton = styled.button`
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease-in-out;
+
+  &.primary {
+    background-color: var(--primary);
+    color: white;
+
+    &:hover {
+      background-color: #1a9b7d;
+    }
+  }
+
+  &.cancel {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-border);
+
+    &:hover {
+      background-color: var(--color-danger-hover-bg);
+    }
+  }
+`;
+
 export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
   const { data: symptomsList = [], error, isLoading } = useSWR("/api/symptoms");
   const [ingredients, setIngredients] = useState(
@@ -302,6 +336,16 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
     }
   };
 
+  const handleCancel = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to cancel? Any unsaved changes will be lost."
+      )
+    ) {
+      window.history.back();
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -332,7 +376,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
   if (error) return <p>Failed to load symptoms.</p>;
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} id="remedy-form">
       <Label>
         Title *
         <Input
@@ -460,10 +504,20 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
           <p>Current image will be kept if no new image is uploaded</p>
         )}
       </Label>
-
-      <Button type="submit" disabled={mode === "create" && !imageFile}>
-        {mode === "create" ? "Create Remedy" : "Update Remedy"}
-      </Button>
+      <ButtonContainer>
+        {mode === "edit" && (
+          <ActionButton type="button" className="cancel" onClick={handleCancel}>
+            Cancel
+          </ActionButton>
+        )}
+        <ActionButton
+          type="submit"
+          className="primary"
+          disabled={mode === "create" && !imageFile}
+        >
+          {mode === "create" ? "Create Remedy" : "Update Remedy"}
+        </ActionButton>
+      </ButtonContainer>
     </Form>
   );
 }
