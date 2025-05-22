@@ -96,7 +96,7 @@ const Button = styled.button`
   }
 
   &:disabled {
-    background-color: var(--color-danger-disabled);
+    background-color: var(--color-disabled);
     cursor: not-allowed;
     transform: none;
   }
@@ -120,30 +120,7 @@ const RemoveBtn = styled.button`
     background-color: var(--color-danger-hover-bg);
   }
 `;
-// const ChipContainer = styled.ul`
-//   display: flex;
-//   flex-wrap: wrap;
-//   gap: 0.5rem;
-//   list-style: none;
-//   padding: 0;
-//   margin: 0.5rem 0 0 0;
-// `;
-// const Chip = styled.li`
-//   display: flex;
-//   align-items: center;
-//   background: white;
-//   padding: 0;
-//   border-radius: 1rem;
-//   font-size: 0.9rem;
-//   transition: all 0.2s ease;
-//   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-//   border: 1px solid var(--text-dark);
-//   overflow: hidden;
 
-//   &:hover {
-//     background: var(--background);
-//   }
-// `;
 
 const Select = styled.select`
   padding: 0.5rem 1rem;
