@@ -7,7 +7,7 @@ import { useBookmarks } from "@/hooks/useBookmarks";
 
 const CardContainer = styled.li`
   position: relative; /* <-- ensure absolute children (bookmark) are positioned correctly */
-  border: 1px solid black;
+  border: 1px solid var(--text-dark);
   border-radius: 0.8rem;
   padding: 1.5rem;
   background-color: var(--background);
