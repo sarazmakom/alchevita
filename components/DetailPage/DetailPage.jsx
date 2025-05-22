@@ -111,12 +111,12 @@ const Button = styled.button`
   transition: background 0.2s ease-in-out;
 
   &.delete {
-    background-color: rgb(226, 10, 64);
+    background-color: var(--danger-text);
     color: white;
   }
 
   &.edit {
-    background-color: #1fab89;
+    background-color: var(--primary);
     color: white;
   }
 
