@@ -19,6 +19,21 @@ const ImageContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const Title = styled.h3`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  max-height: 2.4em; /* 1.2 * 2 lines = ~2.4em */
+  width: 100%; /* ensures it doesn't overflow horizontally */
+  word-break: break-word; /* breaks long words */
+`;
+
 export default function Card({ remedy, currentPath }) {
   const { toggle } = useBookmarks();
   return (
@@ -41,7 +56,7 @@ export default function Card({ remedy, currentPath }) {
         </Link>
       </ImageContainer>
 
-      <h3>{remedy.title}</h3>
+      <Title>{remedy.title}</Title>
       <SymptomsList symptoms={remedy.symptoms} currentPath={currentPath} />
     </CardContainer>
   );
