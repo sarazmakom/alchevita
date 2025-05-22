@@ -138,10 +138,8 @@ const Button = styled.button`
 
 const ModalOverlay = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
+  inset: 0;
+  padding: 2rem;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
@@ -153,8 +151,8 @@ const ModalContent = styled.div`
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  max-width: 400px;
-  width: 90%;
+  max-width: 420px;
+  width: 100%;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 `;
