@@ -121,17 +121,17 @@ const Button = styled.button`
   }
 
   &.confirm {
-    background-color: rgb(226, 10, 64);
+    background-color: var(--color-danger-text);
     color: white;
   }
 
   &.cancel {
-    background-color: #f8d7da;
-    color: rgb(226, 10, 64);
-    border: 1px solid rgb(235, 151, 159);
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-border);
 
     &:hover {
-      background-color: #f1c0c4;
+      background-color: var(color-danger-hover-bg);
     }
   }
 `;
