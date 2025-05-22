@@ -16,7 +16,7 @@ export default function Logo() {
         src="/images/logo.png"
         alt="Alchevita logo"
         width={48}
-        height={48}
+        height={40}
       />
     </LogoLink>
   );

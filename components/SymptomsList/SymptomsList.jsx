@@ -12,14 +12,16 @@ const StyledSymptomsList = styled.ul`
 `;
 
 const SymptomPill = styled(Link)`
-  background-color: #f3f4f6;
   border-radius: 1rem;
+  border: 1px solid var(--text-dark);
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
-  color: #374151;
+  color: var(--text-dark);
+  background-color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
   max-width: 100%;
 
   @media (min-width: 640px) {

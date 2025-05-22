@@ -4,7 +4,7 @@ import Navbar from "../Navbar/Navbar";
 
 const MainContent = styled.main`
   padding-bottom: 5rem;
-  padding-top: 4rem;
+  padding-top: 1rem;
 `;
 
 export default function Layout({ title = "", children }) {
