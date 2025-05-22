@@ -1,7 +1,8 @@
 import dbConnect from "@/db/connect";
 import { BookmarkRemedy } from "@/db/models/BookmarkRemedy";
 import mongoose from "mongoose";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(req, res) {
   const { remedyId } = req.query;
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   if (!session) {
     return res.status(401).json({
