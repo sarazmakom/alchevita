@@ -36,7 +36,7 @@ export function useBookmarks() {
         method,
         ...(method === "POST" && {
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ remedyId }),
+          body: JSON.stringify({ remedy: remedyId }),
         }),
       });
 

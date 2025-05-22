@@ -1,5 +1,5 @@
-import { useState } from "react";
 import styled from "styled-components";
+import { useSession } from "next-auth/react";
 
 const BookmarkButton = styled.button`
   position: absolute;
@@ -39,6 +39,9 @@ const BookmarkButton = styled.button`
 `;
 
 export default function BookMarkbutton({ bookmarked, onToggle }) {
+  const { data: session } = useSession();
+  if (!session) return null;
+
   const toggle = (e) => {
     e.stopPropagation();
     if (onToggle) onToggle(!bookmarked);

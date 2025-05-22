@@ -1,5 +1,8 @@
 import dbConnect from "@/db/connect";
 import { BookmarkRemedy } from "@/db/models/BookmarkRemedy";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   try {
@@ -13,9 +16,21 @@ export default async function handler(req, res) {
     return;
   }
 
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    return res.status(401).json({
+      status: "Unauthorized",
+      error: "LOGIN_REQUIRED",
+    });
+  }
+
+  const userId = session.user.id;
+
   try {
     if (req.method === "GET") {
-      const bookmarkRemedies = await BookmarkRemedy.find();
+      const bookmarkRemedies = await BookmarkRemedy.find({
+        user: userId,
+      }).populate("remedy");
 
       res.status(200).json(bookmarkRemedies);
       return;
@@ -30,10 +45,13 @@ export default async function handler(req, res) {
   }
   try {
     if (req.method === "POST") {
-      const bookmarkRemedyData = req.body;
-
-      await BookmarkRemedy.create(bookmarkRemedyData);
-
+      const { remedy } = req.body;
+      const userObjectId = new mongoose.Types.ObjectId(userId);
+      const remedyObjectId = new mongoose.Types.ObjectId(remedy);
+      await BookmarkRemedy.create({
+        user: userObjectId,
+        remedy: remedyObjectId,
+      });
       res.status(201).json({ status: "Remedy bookmark created" });
       return;
     }
