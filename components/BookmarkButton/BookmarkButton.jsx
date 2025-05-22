@@ -9,6 +9,7 @@ const BookmarkButton = styled.button`
   background: transparent;
   border: none;
   padding: 0;
+  margin: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -24,8 +25,8 @@ const BookmarkButton = styled.button`
   svg {
     width: 100%;
     height: 100%;
-    fill: ${(props) => (props.bookmarked ? "red" : "white")};
-    stroke: red;
+    fill: ${(props) => (props.bookmarked ? "#0E6F5D" : "#D7FBE8")};
+    stroke: var(--primary);
     stroke-width: 2px;
   }
 
