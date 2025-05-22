@@ -102,7 +102,7 @@ const MenuItem = styled.button`
   }
 `;
 
-const BoldText = styled.span`
+const BoldText = styled.strong`
   font-weight: 700;
   font-size: 1.2rem;
   color: #333;
@@ -147,36 +147,34 @@ export default function SlideInMenu({ isOpen, onClose }) {
         <MenuContent>
           <MenuTitle>Menu</MenuTitle>
 
-          <MenuSection>
-            {session ? (
-              <MenuItem
-                onClick={() => {
-                  signOut({ callbackUrl: "/" });
-                  handleMenuItemClick();
-                }}
-              >
-                Log Out
-              </MenuItem>
-            ) : (
-              <MenuItem
-                onClick={() => {
-                  signIn("github");
-                  handleMenuItemClick();
-                }}
-              >
-                Log In
-              </MenuItem>
-            )}
-          </MenuSection>
+          {session ? (
+            <MenuItem
+              onClick={() => {
+                signOut({ callbackUrl: "/" });
+                handleMenuItemClick();
+              }}
+            >
+              Log Out
+            </MenuItem>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                signIn("github");
+                handleMenuItemClick();
+              }}
+            >
+              Log In
+            </MenuItem>
+          )}
 
+          <BoldText>About</BoldText>
+          <AboutDescription>
+            Alchevita is your go-to app for natural remedies. Discover and
+            bookmark your favorites, or add your own to build a personalized
+            wellness library. Simple, natural healing at your fingertips.
+          </AboutDescription>
+          <BoldText>Made with love by</BoldText>
           <MenuSection>
-            <BoldText>About</BoldText>
-            <AboutDescription>
-              Alchevita is your go-to app for natural remedies. Discover and
-              bookmark your favorites, or add your own to build a personalized
-              wellness library. Simple, natural healing at your fingertips.
-            </AboutDescription>
-            <BoldText>Made with love by</BoldText>
             <ImageContainer>
               <Image
                 src="/images/about-image.jpg"
