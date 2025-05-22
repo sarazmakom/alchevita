@@ -111,7 +111,7 @@ const Button = styled.button`
   transition: background 0.2s ease-in-out;
 
   &.delete {
-    background-color: var(--danger-text);
+    background-color: var(--color-danger-text);
     color: white;
   }
 
