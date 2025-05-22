@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 const MenuOverlay = styled.div`
   position: fixed;
@@ -30,6 +31,7 @@ const MenuContainer = styled.nav`
   flex-direction: column;
   border-radius: 12px 12px 0 0;
   transition: opacity 0.3s ease-in-out;
+  overflow-y: auto;
 `;
 
 const CloseButton = styled.button`
@@ -51,13 +53,28 @@ const MenuContent = styled.div`
   padding: 4rem 2rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   height: 100%;
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
-  justify-content: center;
   align-items: center;
+`;
+
+const MenuTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
+`;
+
+const MenuSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
 `;
 
 const MenuItem = styled.button`
@@ -85,6 +102,34 @@ const MenuItem = styled.button`
   }
 `;
 
+const BoldText = styled.strong`
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #333;
+  display: block;
+  text-align: center;
+  margin-bottom: 0.5rem;
+`;
+
+const AboutDescription = styled.p`
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+  text-align: center;
+  max-width: 500px;
+  margin: 0;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 1rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
 export default function SlideInMenu({ isOpen, onClose }) {
   const { data: session } = useSession();
 
@@ -100,17 +145,17 @@ export default function SlideInMenu({ isOpen, onClose }) {
           <X size={24} />
         </CloseButton>
         <MenuContent>
+          <MenuTitle>Menu</MenuTitle>
+
           {session ? (
-            <>
-              <MenuItem
-                onClick={() => {
-                  signOut({ callbackUrl: "/" });
-                  handleMenuItemClick();
-                }}
-              >
-                Log Out
-              </MenuItem>
-            </>
+            <MenuItem
+              onClick={() => {
+                signOut({ callbackUrl: "/" });
+                handleMenuItemClick();
+              }}
+            >
+              Log Out
+            </MenuItem>
           ) : (
             <MenuItem
               onClick={() => {
@@ -121,6 +166,24 @@ export default function SlideInMenu({ isOpen, onClose }) {
               Log In
             </MenuItem>
           )}
+
+          <BoldText>About</BoldText>
+          <AboutDescription>
+            Alchevita is your go-to app for natural remedies. Discover and
+            bookmark your favorites, or add your own to build a personalized
+            wellness library. Simple, natural healing at your fingertips.
+          </AboutDescription>
+          <BoldText>Made with love by</BoldText>
+          <MenuSection>
+            <ImageContainer>
+              <Image
+                src="/images/about-image.jpg"
+                alt="Natural remedies illustration"
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </ImageContainer>
+          </MenuSection>
         </MenuContent>
       </MenuContainer>
     </>
