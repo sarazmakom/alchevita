@@ -29,9 +29,8 @@ const Title = styled.h3`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   line-height: 1.2;
-  max-height: 2.4em; /* 1.2 * 2 lines = ~2.4em */
-  width: 100%; /* ensures it doesn't overflow horizontally */
-  word-break: break-word; /* breaks long words */
+  height: 2.4em;
+  word-break: break-word;
 `;
 
 export default function Card({ remedy, currentPath }) {

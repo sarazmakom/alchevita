@@ -45,7 +45,7 @@ const CloseButton = styled.button`
   color: #666;
 
   &:hover {
-    color: #333;
+    color: var(--primary);
   }
 `;
 
@@ -108,7 +108,6 @@ const BoldText = styled.strong`
   color: #333;
   display: block;
   text-align: center;
-  margin-bottom: 0.5rem;
 `;
 
 const AboutDescription = styled.p`
@@ -128,6 +127,7 @@ const ImageContainer = styled.div`
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0 2rem;
 `;
 
 export default function SlideInMenu({ isOpen, onClose }) {
@@ -145,7 +145,7 @@ export default function SlideInMenu({ isOpen, onClose }) {
           <X size={24} />
         </CloseButton>
         <MenuContent>
-          <MenuTitle>Menu</MenuTitle>
+          <MenuTitle>Alchevita</MenuTitle>
 
           {session ? (
             <MenuItem
@@ -169,11 +169,13 @@ export default function SlideInMenu({ isOpen, onClose }) {
 
           <BoldText>About</BoldText>
           <AboutDescription>
-            Alchevita is your go-to app for natural remedies. Discover and
-            bookmark your favorites, or add your own to build a personalized
-            wellness library. Simple, natural healing at your fingertips.
+            Alchevita is your go-to app for natural remedies.
+            <br />
+            Discover and bookmark your favourites or add your own to build a
+            personalized wellness library. <br />
+            Simple, natural healing at your fingertips.
           </AboutDescription>
-          <BoldText>Made with love by</BoldText>
+          <BoldText>Made with 💚 by</BoldText>
           <MenuSection>
             <ImageContainer>
               <Image
