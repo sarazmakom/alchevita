@@ -25,8 +25,9 @@ const BookmarkButton = styled.button`
   svg {
     width: 100%;
     height: 100%;
-    fill: ${(props) => (props.bookmarked ? "#0E6F5D" : "#D7FBE8")};
-    stroke: var(--primary);
+    fill: ${(props) => (props.bookmarked ? "#e20a40" : "none")};
+    stroke: #1fab89;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
     stroke-width: 2px;
   }
 
