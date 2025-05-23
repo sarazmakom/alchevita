@@ -127,6 +127,7 @@ const ImageContainer = styled.div`
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0 2rem;
 `;
 
 export default function SlideInMenu({ isOpen, onClose }) {
