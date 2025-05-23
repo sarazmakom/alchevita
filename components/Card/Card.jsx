@@ -7,7 +7,7 @@ import { useBookmarks } from "@/hooks/useBookmarks";
 
 const CardContainer = styled.li`
   position: relative; /* <-- ensure absolute children (bookmark) are positioned correctly */
-  border: 1px solid black;
+  border: 1px solid var(--text-dark);
   border-radius: 0.8rem;
   padding: 1.5rem;
   background-color: var(--background);
@@ -17,6 +17,21 @@ const ImageContainer = styled.div`
   position: relative;
   height: 10rem;
   margin-bottom: 20px;
+`;
+
+const Title = styled.h3`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  max-height: 2.4em; /* 1.2 * 2 lines = ~2.4em */
+  width: 100%; /* ensures it doesn't overflow horizontally */
+  word-break: break-word; /* breaks long words */
 `;
 
 export default function Card({ remedy, currentPath }) {
@@ -41,7 +56,7 @@ export default function Card({ remedy, currentPath }) {
         </Link>
       </ImageContainer>
 
-      <h3>{remedy.title}</h3>
+      <Title>{remedy.title}</Title>
       <SymptomsList symptoms={remedy.symptoms} currentPath={currentPath} />
     </CardContainer>
   );

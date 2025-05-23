@@ -5,80 +5,271 @@ import styled, { css } from "styled-components";
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
 `;
+
 const Label = styled.label`
   display: flex;
   flex-direction: column;
-  font-weight: bold;
+  font-weight: 500;
   gap: 0.5rem;
+  color: var(--text-dark);
 `;
+
 const Input = styled.input`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--text-dark);
+  font-size: 0.75rem;
+  color: var(--text-dark);
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: white;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 var(--primary);
+
+  &:focus {
+    border-color: var(--primary, #38b2ac);
+    box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.2);
   ${(props) =>
     props.error &&
     css`
-      border-color: red;
+      border-color: var(--color-danger-text);
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.2);
+      }
     `}
-  height: 40px;
+  
 `;
+
 const Textarea = styled.textarea`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--text-dark);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 var(--primary);
+
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(56, 178, 172, 0.2);
+  }
   ${(props) =>
     props.error &&
     css`
-      border-color: red;
+      border-color: var(--color-danger-text);
     `}
 `;
 const Button = styled.button`
-  padding: 0.75rem;
-  background-color: #1fab89;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 1rem;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
   &:disabled {
-    background-color: #999;
+    background-color: var(--color-disabled);
     cursor: not-allowed;
+    transform: none;
   }
 `;
+
 const RemoveBtn = styled.button`
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   background: none;
   border: none;
-  color: red;
+  color: var(--color-danger-text);
   cursor: pointer;
   font-weight: bold;
-`;
-const ChipContainer = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  text-decoration: none;
-`;
-const Chip = styled.li`
-  display: flex;
+  padding: 0.25rem;
+  border-radius: 50%;
+  display: inline-flex;
   align-items: center;
-  background: #f0f0f0;
-  padding: 0.4rem 0.6rem;
-  border-radius: 16px;
-  margin: 0.2rem;
-  font-size: 0.9rem;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-danger-hover-bg);
+  }
 `;
+
 const Select = styled.select`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 40px;
-  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--text-dark);
+  background-color: white;
+  font-size: 1rem;
+  font-family: Manrope;
+  background-color: var(--background);
+  color: var(--text-dark);
+  min-width: 250px;
+  outline: none;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231fab89'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 2rem;
+
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(31, 171, 137, 0.2);
+  }
+
+  &:hover {
+    border-color: var(--text-dark);
+  }
 `;
+
 const ErrorText = styled.p`
   color: red;
   font-size: 0.875rem;
+  margin-top: 0.25rem;
+`;
+
+const FileInputContainer = styled.div`
+  position: relative;
+  margin-top: 0.5rem;
+`;
+
+const HiddenFileInput = styled.input`
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+`;
+
+const CustomFileButton = styled.label`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--background);
+  color: var(--text-dark);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--primary);
+
+  &:hover {
+    background-color: #e2e8f0;
+    border-color: var(--primary);
+  }
+`;
+
+const PillContainer = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+`;
+
+const IngredientPill = styled.li`
+  border-radius: 1rem;
+  border: 1px solid var(--text-dark);
+  padding: 0;
+  font-size: 0.875rem;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 2.5rem;
+  box-shadow: 0 1px 2px 0 var(--primary);
+  font-family: Manrope;
+`;
+
+const IngredientInput = styled.input`
+  border: none;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  background: transparent;
+  outline: none;
+  color: var(--text-dark);
+  min-width: 120px;
+
+  &:focus {
+    box-shadow: none;
+  }
+`;
+
+const SymptomPill = styled.li`
+  border-radius: 1rem;
+  border: 1px solid var(--text-dark);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 var(--primary);
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const ActionButton = styled.button`
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease-in-out;
+
+  &.primary {
+    background-color: var(--primary);
+    color: white;
+
+    &:hover {
+      background-color: #1a9b7d;
+    }
+  }
+
+  &.cancel {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-border);
+
+    &:hover {
+      background-color: var(--color-danger-hover-bg);
+    }
+  }
 `;
 
 export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
@@ -145,6 +336,16 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
     }
   };
 
+  const handleCancel = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to cancel? Any unsaved changes will be lost."
+      )
+    ) {
+      window.history.back();
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -175,7 +376,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
   if (error) return <p>Failed to load symptoms.</p>;
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} id="remedy-form">
       <Label>
         Title *
         <Input
@@ -189,19 +390,14 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
 
       <Label>
         Ingredients *
-        <ChipContainer>
+        <PillContainer>
           {ingredients.map((value, index) => (
-            <Chip key={index}>
-              <Input
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  width: "auto",
-                }}
+            <IngredientPill key={index}>
+              <IngredientInput
                 value={value}
-                error={!!errors.ingredients && index === 0}
                 onChange={(e) => handleIngredientChange(index, e.target.value)}
                 required={index === 0}
+                placeholder="Add ingredient"
               />
               <RemoveBtn
                 type="button"
@@ -213,9 +409,9 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
               >
                 ✕
               </RemoveBtn>
-            </Chip>
+            </IngredientPill>
           ))}
-        </ChipContainer>
+        </PillContainer>
         <Button
           type="button"
           onClick={() => setIngredients([...ingredients, ""])}
@@ -262,11 +458,11 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
         >
           +
         </Button>
-        <ChipContainer>
+        <PillContainer>
           {symptoms.map((symId, i) => {
             const sym = symptomsList.find((s) => s._id === symId);
             return (
-              <Chip key={symId}>
+              <SymptomPill key={symId}>
                 {sym?.name || symId}
                 <RemoveBtn
                   type="button"
@@ -278,21 +474,29 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
                 >
                   ✕
                 </RemoveBtn>
-              </Chip>
+              </SymptomPill>
             );
           })}
-        </ChipContainer>
+        </PillContainer>
         {errors.symptoms && <ErrorText>{errors.symptoms}</ErrorText>}
       </Label>
 
       <Label>
         Upload Image {mode === "create" && "*"}
-        <Input
-          type="file"
-          accept=".jpg,.jpeg,.png,.webp"
-          onChange={handleImageChange}
-          error={!!(errors.image || imageError)}
-        />
+        <FileInputContainer>
+          <HiddenFileInput
+            type="file"
+            id="image-upload"
+            accept=".jpg,.jpeg,.png,.webp"
+            onChange={handleImageChange}
+          />
+          <CustomFileButton htmlFor="image-upload">
+            Choose File
+          </CustomFileButton>
+          {imageFile && (
+            <span style={{ marginLeft: "1rem" }}>{imageFile.name}</span>
+          )}
+        </FileInputContainer>
         {(imageError || errors.image) && (
           <ErrorText>{imageError || errors.image}</ErrorText>
         )}
@@ -300,10 +504,20 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
           <p>Current image will be kept if no new image is uploaded</p>
         )}
       </Label>
-
-      <Button type="submit" disabled={mode === "create" && !imageFile}>
-        {mode === "create" ? "Create Remedy" : "Update Remedy"}
-      </Button>
+      <ButtonContainer>
+        {mode === "edit" && (
+          <ActionButton type="button" className="cancel" onClick={handleCancel}>
+            Cancel
+          </ActionButton>
+        )}
+        <ActionButton
+          type="submit"
+          className="primary"
+          disabled={mode === "create" && !imageFile}
+        >
+          {mode === "create" ? "Create Remedy" : "Update Remedy"}
+        </ActionButton>
+      </ButtonContainer>
     </Form>
   );
 }

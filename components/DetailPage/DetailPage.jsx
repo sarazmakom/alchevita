@@ -111,27 +111,27 @@ const Button = styled.button`
   transition: background 0.2s ease-in-out;
 
   &.delete {
-    background-color: rgb(226, 10, 64);
+    background-color: var(--color-danger-text);
     color: white;
   }
 
   &.edit {
-    background-color: #1fab89;
+    background-color: var(--primary);
     color: white;
   }
 
   &.confirm {
-    background-color: rgb(226, 10, 64);
+    background-color: var(--color-danger-text);
     color: white;
   }
 
   &.cancel {
-    background-color: #f8d7da;
-    color: rgb(226, 10, 64);
-    border: 1px solid rgb(235, 151, 159);
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-border);
 
     &:hover {
-      background-color: #f1c0c4;
+      background-color: var(color-danger-hover-bg);
     }
   }
 `;
