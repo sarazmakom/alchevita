@@ -20,7 +20,7 @@ const BackButton = styled.button`
   padding: 0;
 
   &:hover {
-    color: #1fab89;
+    color: var(--primary);
   }
 
   transition: color 0.2s ease-in-out;
