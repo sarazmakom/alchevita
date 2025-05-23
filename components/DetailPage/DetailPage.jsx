@@ -172,6 +172,46 @@ const ModalActions = styled.div`
   gap: 1rem;
 `;
 
+const Ingredients = ({ ingredients }) => (
+  <section aria-labelledby="ingredients-heading">
+    <h3 id="ingredients-heading">Ingredients</h3>
+    <StyledList>
+      {ingredients.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </StyledList>
+  </section>
+);
+
+const Preparation = ({ preparation }) => (
+  <section aria-labelledby="preparation-heading">
+    <h3 id="preparation-heading">Preparation</h3>
+    <p>{preparation}</p>
+  </section>
+);
+
+const Usage = ({ usage }) => (
+  <section aria-labelledby="usage-heading">
+    <h3 id="usage-heading">Usage</h3>
+    <p>{usage}</p>
+  </section>
+);
+
+const Symptoms = ({ symptoms }) => (
+  <section aria-labelledby="symptoms-heading">
+    <h3 id="symptoms-heading">Symptoms</h3>
+    <StyledList>
+      {symptoms?.length > 0 ? (
+        symptoms.map((symptom, index) => (
+          <li key={symptom._id || index}>{symptom.name}</li>
+        ))
+      ) : (
+        <li>No symptoms listed.</li>
+      )}
+    </StyledList>
+  </section>
+);
+
 function DeleteConfirmationModal({ onCancel, onConfirm }) {
   const modalRef = useRef(null);
   const handleOverlayClick = (event) => {
@@ -259,37 +299,10 @@ export default function DetailPage({ element, isOwner }) {
         <Article>
           <Title>{element.title}</Title>
 
-          <section aria-labelledby="ingredients-heading">
-            <h3 id="ingredients-heading">Ingredients</h3>
-            <StyledList>
-              {element.ingredients.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </StyledList>
-          </section>
-
-          <section aria-labelledby="preparation-heading">
-            <h3 id="preparation-heading">Preparation</h3>
-            <p>{element.preparation}</p>
-          </section>
-
-          <section aria-labelledby="usage-heading">
-            <h3 id="usage-heading">Usage</h3>
-            <p>{element.usage}</p>
-          </section>
-
-          <section aria-labelledby="symptoms-heading">
-            <h3 id="symptoms-heading">Symptoms</h3>
-            <StyledList>
-              {element.symptoms?.length > 0 ? (
-                element.symptoms.map((symptom, index) => (
-                  <li key={symptom._id || index}>{symptom.name}</li>
-                ))
-              ) : (
-                <li>No symptoms listed.</li>
-              )}
-            </StyledList>
-          </section>
+          <Ingredients ingredients={element.ingredients} />
+          <Preparation preparation={element.preparation} />
+          <Usage usage={element.usage} />
+          <Symptoms symptoms={element.symptoms} />
 
           {confirmDelete && (
             <DeleteConfirmationModal
