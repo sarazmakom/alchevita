@@ -23,8 +23,8 @@ const NavItem = styled(Link)`
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: ${({ isActive }) =>
-    isActive ? "var(--primary)" : "var(--text-dark)"};
+  color: ${({ $isActive }) =>
+    $isActive ? "var(--primary)" : "var(--text-dark)"};
   width: 24px;
   height: 24px;
   transition: color 0.2s ease-in-out;
@@ -40,20 +40,20 @@ export default function Navbar() {
 
   return (
     <NavContainer>
-      <NavItem href="/" isActive={router.pathname === "/"}>
+      <NavItem href="/" $isActive={router.pathname === "/"}>
         <House size={24} />
       </NavItem>
       {session && (
         <>
           <NavItem
             href="/bookmark-remedies"
-            isActive={router.pathname === "/bookmark-remedies"}
+            $isActive={router.pathname === "/bookmark-remedies"}
           >
             <Heart size={24} />
           </NavItem>
           <NavItem
             href="/create-remedy"
-            isActive={router.pathname === "/create-remedy"}
+            $isActive={router.pathname === "/create-remedy"}
           >
             <SquarePlus size={24} />
           </NavItem>

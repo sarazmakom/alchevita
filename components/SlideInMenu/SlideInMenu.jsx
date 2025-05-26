@@ -11,8 +11,8 @@ const MenuOverlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
   transition: opacity 0.3s ease-in-out;
 `;
 
@@ -24,7 +24,7 @@ const MenuContainer = styled.nav`
   height: 50%;
   background-color: var(--surface);
   z-index: 1001;
-  transform: translateY(${({ isOpen }) => (isOpen ? "0" : "100%")});
+  transform: translateY(${({ $isOpen }) => ($isOpen ? "0" : "100%")});
   transition: transform 0.3s ease-in-out, background-color 0.3s ease;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -142,8 +142,8 @@ export default function SlideInMenu({ isOpen, onClose }) {
 
   return (
     <>
-      <MenuOverlay isOpen={isOpen} onClick={onClose} />
-      <MenuContainer isOpen={isOpen}>
+      <MenuOverlay $isOpen={isOpen} onClick={onClose} />
+      <MenuContainer $isOpen={isOpen}>
         <CloseButton onClick={onClose} aria-label="Close menu">
           <X size={24} />
         </CloseButton>

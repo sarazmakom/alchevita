@@ -39,7 +39,7 @@ const Input = styled.input`
   }
 
   ${(props) =>
-    props.error &&
+    props.$error &&
     css`
       border-color: var(--color-danger-text);
       &:focus {
@@ -69,7 +69,7 @@ const Textarea = styled.textarea`
   }
 
   ${(props) =>
-    props.error &&
+    props.$error &&
     css`
       border-color: var(--color-danger-text);
     `}
@@ -385,7 +385,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
         Title *
         <Input
           name="title"
-          error={!!errors.title}
+          $error={!!errors.title}
           required
           defaultValue={initialData?.title}
         />
