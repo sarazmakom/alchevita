@@ -7,11 +7,9 @@ const FilterWrapper = styled.section`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 800px;
   gap: 0.75rem;
-  background-color: var(--surface);
+  background-color: transparent;
   transition: background-color 0.3s ease;
 `;
 
