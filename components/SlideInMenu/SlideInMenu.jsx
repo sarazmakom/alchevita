@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { X } from "lucide-react";
 import Image from "next/image";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { useTheme } from "@/context/ThemeContext";
 
 const MenuOverlay = styled.div`
   position: fixed;
@@ -133,8 +135,22 @@ const ImageContainer = styled.div`
   margin: 1rem 0 2rem;
 `;
 
+const ThemeSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
+const ThemeText = styled.span`
+  color: var(--text-dark);
+  font-size: 1rem;
+  transition: color 0.3s ease;
+`;
+
 export default function SlideInMenu({ isOpen, onClose }) {
   const { data: session } = useSession();
+  const { isDarkMode } = useTheme();
 
   const handleMenuItemClick = () => {
     onClose();
@@ -149,6 +165,11 @@ export default function SlideInMenu({ isOpen, onClose }) {
         </CloseButton>
         <MenuContent>
           <MenuTitle>Alchevita</MenuTitle>
+
+          <ThemeSection>
+            <ThemeText>{isDarkMode ? "Dark Mode" : "Light Mode"}</ThemeText>
+            <ThemeToggle />
+          </ThemeSection>
 
           {session ? (
             <MenuItem

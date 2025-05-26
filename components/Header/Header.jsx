@@ -5,7 +5,6 @@ import TitleBar from "../TitleBar/TitleBar";
 import styled from "styled-components";
 import { Menu } from "lucide-react";
 import SlideInMenu from "../SlideInMenu/SlideInMenu";
-import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -62,7 +61,6 @@ export default function Header({ title }) {
       <TitleBar title={title} />
       <UserSection>
         {session?.user?.name && <UserName>{session.user.name}</UserName>}
-        <ThemeToggle />
         <MenuButton onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
           <Menu size={32} />
         </MenuButton>
