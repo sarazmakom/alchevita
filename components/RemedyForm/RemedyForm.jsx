@@ -205,13 +205,14 @@ const IngredientPill = styled.li`
   border: 1px solid var(--text-dark);
   padding: 0;
   font-size: 0.875rem;
-  background-color: white;
+  background-color: var(--surface);
   display: flex;
   align-items: center;
   overflow: hidden;
   height: 2.5rem;
   box-shadow: 0 1px 2px 0 var(--primary);
   font-family: Manrope;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 const IngredientInput = styled.input`
@@ -222,9 +223,15 @@ const IngredientInput = styled.input`
   outline: none;
   color: var(--text-dark);
   min-width: 120px;
+  transition: color 0.3s ease;
 
   &:focus {
     box-shadow: none;
+  }
+
+  &::placeholder {
+    color: var(--text-dark);
+    opacity: 0.7;
   }
 `;
 
@@ -233,12 +240,13 @@ const SymptomPill = styled.li`
   border: 1px solid var(--text-dark);
   padding: 0.375rem 0.875rem;
   font-size: 0.875rem;
-  background-color: white;
+  background-color: var(--surface);
   color: var(--text-dark);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   box-shadow: 0 1px 2px 0 var(--primary);
+  transition: all 0.3s ease;
 `;
 
 const ButtonContainer = styled.div`

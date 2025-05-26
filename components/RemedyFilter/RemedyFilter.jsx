@@ -40,6 +40,11 @@ const Select = styled.select`
   &:hover {
     border-color: var(--primary);
   }
+
+  option {
+    background-color: var(--surface);
+    color: var(--text-dark);
+  }
 `;
 
 const ClearButton = styled.button`
