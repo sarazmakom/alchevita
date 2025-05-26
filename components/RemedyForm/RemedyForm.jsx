@@ -28,23 +28,24 @@ const Input = styled.input`
   color: var(--text-dark);
   font-size: 1rem;
   font-family: inherit;
-  background-color: white;
+  background-color: var(--surface);
   outline: none;
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px 0 var(--primary);
 
   &:focus {
-    border-color: var(--primary, #38b2ac);
+    border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.2);
+  }
+
   ${(props) =>
-    props.error &&
+    props.$error &&
     css`
       border-color: var(--color-danger-text);
       &:focus {
         box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.2);
       }
     `}
-  
 `;
 
 const Textarea = styled.textarea`
@@ -57,6 +58,8 @@ const Textarea = styled.textarea`
   font-family: inherit;
   resize: vertical;
   outline: none;
+  background-color: var(--surface);
+  color: var(--text-dark);
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px 0 var(--primary);
 
@@ -64,12 +67,14 @@ const Textarea = styled.textarea`
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(56, 178, 172, 0.2);
   }
+
   ${(props) =>
-    props.error &&
+    props.$error &&
     css`
       border-color: var(--color-danger-text);
     `}
 `;
+
 const Button = styled.button`
   padding: 0.75rem 1.5rem;
   background-color: var(--primary);
@@ -125,10 +130,9 @@ const Select = styled.select`
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   border: 1px solid var(--text-dark);
-  background-color: white;
+  background-color: var(--surface);
   font-size: 1rem;
   font-family: Manrope;
-  background-color: var(--background);
   color: var(--text-dark);
   min-width: 250px;
   outline: none;
@@ -145,7 +149,7 @@ const Select = styled.select`
   }
 
   &:hover {
-    border-color: var(--text-dark);
+    border-color: var(--primary);
   }
 `;
 
@@ -174,17 +178,24 @@ const CustomFileButton = styled.label`
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1rem;
-  background-color: var(--background);
+  background-color: var(--surface);
   color: var(--text-dark);
   border-radius: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid var(--primary);
+  border: 1px solid var(--text-dark);
 
   &:hover {
-    background-color: #e2e8f0;
+    background-color: var(--primary);
+    color: white;
     border-color: var(--primary);
   }
+`;
+
+const FileNameText = styled.span`
+  margin-left: 1rem;
+  color: var(--text-dark);
+  transition: color 0.3s ease;
 `;
 
 const PillContainer = styled.ul`
@@ -201,13 +212,14 @@ const IngredientPill = styled.li`
   border: 1px solid var(--text-dark);
   padding: 0;
   font-size: 0.875rem;
-  background-color: white;
+  background-color: var(--surface);
   display: flex;
   align-items: center;
   overflow: hidden;
   height: 2.5rem;
   box-shadow: 0 1px 2px 0 var(--primary);
   font-family: Manrope;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 const IngredientInput = styled.input`
@@ -218,9 +230,15 @@ const IngredientInput = styled.input`
   outline: none;
   color: var(--text-dark);
   min-width: 120px;
+  transition: color 0.3s ease;
 
   &:focus {
     box-shadow: none;
+  }
+
+  &::placeholder {
+    color: var(--text-dark);
+    opacity: 0.7;
   }
 `;
 
@@ -229,12 +247,13 @@ const SymptomPill = styled.li`
   border: 1px solid var(--text-dark);
   padding: 0.375rem 0.875rem;
   font-size: 0.875rem;
-  background-color: white;
+  background-color: var(--surface);
   color: var(--text-dark);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   box-shadow: 0 1px 2px 0 var(--primary);
+  transition: all 0.3s ease;
 `;
 
 const ButtonContainer = styled.div`
@@ -381,7 +400,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
         Title *
         <Input
           name="title"
-          error={!!errors.title}
+          $error={!!errors.title}
           required
           defaultValue={initialData?.title}
         />
@@ -493,9 +512,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
           <CustomFileButton htmlFor="image-upload">
             Choose File
           </CustomFileButton>
-          {imageFile && (
-            <span style={{ marginLeft: "1rem" }}>{imageFile.name}</span>
-          )}
+          {imageFile && <FileNameText>{imageFile.name}</FileNameText>}
         </FileInputContainer>
         {(imageError || errors.image) && (
           <ErrorText>{imageError || errors.image}</ErrorText>

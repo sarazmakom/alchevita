@@ -7,20 +7,19 @@ const FilterWrapper = styled.section`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(155, 255, 255, 0.1);
   max-width: 800px;
   gap: 0.75rem;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
 `;
 
 const Select = styled.select`
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  border: 1px solid white;
-  background-color: white;
+  border: 1px solid var(--text-dark);
+  background-color: var(--surface);
   font-size: 1rem;
   font-family: Manrope;
-  background-color: var(--background);
   color: var(--text-dark);
   min-width: 250px;
   outline: none;
@@ -37,7 +36,12 @@ const Select = styled.select`
   }
 
   &:hover {
-    border-color: var(--text-dark);
+    border-color: var(--primary);
+  }
+
+  option {
+    background-color: var(--surface);
+    color: var(--text-dark);
   }
 `;
 

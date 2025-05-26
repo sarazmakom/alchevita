@@ -8,12 +8,21 @@ const Headline = styled.h1`
   color: var(--text-dark);
   margin: 0;
   padding: 0 1rem;
-  white-space: nowrap;
+  transition: color 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.2;
+  max-height: 2.4em;
 
   @media (min-width: 768px) {
     font-size: 2rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    max-height: none;
+    line-height: normal;
   }
 `;
 

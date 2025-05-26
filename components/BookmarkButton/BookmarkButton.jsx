@@ -25,7 +25,7 @@ const BookmarkButton = styled.button`
   svg {
     width: 100%;
     height: 100%;
-    fill: ${(props) => (props.bookmarked ? "#e20a40" : "none")};
+    fill: ${(props) => (props.$bookmarked ? "#e20a40" : "none")};
     stroke: #1fab89;
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
     stroke-width: 2px;
@@ -51,7 +51,7 @@ export default function BookMarkbutton({ bookmarked, onToggle }) {
   return (
     <BookmarkButton
       aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
-      bookmarked={bookmarked}
+      $bookmarked={bookmarked}
       onClick={toggle}
     >
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

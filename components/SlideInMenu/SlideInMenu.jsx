@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { X } from "lucide-react";
 import Image from "next/image";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { useTheme } from "@/context/ThemeContext";
 
 const MenuOverlay = styled.div`
   position: fixed;
@@ -11,8 +13,8 @@ const MenuOverlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
   transition: opacity 0.3s ease-in-out;
 `;
 
@@ -22,15 +24,14 @@ const MenuContainer = styled.nav`
   left: 0;
   width: 100%;
   height: 50%;
-  background-color: white;
+  background-color: var(--surface);
   z-index: 1001;
-  transform: translateY(${({ isOpen }) => (isOpen ? "0" : "100%")});
-  transition: transform 0.3s ease-in-out;
+  transform: translateY(${({ $isOpen }) => ($isOpen ? "0" : "100%")});
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   border-radius: 12px 12px 0 0;
-  transition: opacity 0.3s ease-in-out;
   overflow-y: auto;
 `;
 
@@ -42,7 +43,8 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  color: #666;
+  color: var(--text-dark);
+  transition: color 0.2s ease-in-out;
 
   &:hover {
     color: var(--primary);
@@ -64,9 +66,10 @@ const MenuContent = styled.div`
 const MenuTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   margin: 0;
   text-align: center;
+  transition: color 0.3s ease;
 `;
 
 const MenuSection = styled.div`
@@ -105,18 +108,20 @@ const MenuItem = styled.button`
 const BoldText = styled.strong`
   font-weight: 700;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--text-dark);
   display: block;
   text-align: center;
+  transition: color 0.3s ease;
 `;
 
 const AboutDescription = styled.p`
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #666;
+  color: var(--text-dark);
   text-align: center;
   max-width: 500px;
   margin: 0;
+  transition: color 0.3s ease;
 `;
 
 const ImageContainer = styled.div`
@@ -130,8 +135,22 @@ const ImageContainer = styled.div`
   margin: 1rem 0 2rem;
 `;
 
+const ThemeSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
+const ThemeText = styled.span`
+  color: var(--text-dark);
+  font-size: 1rem;
+  transition: color 0.3s ease;
+`;
+
 export default function SlideInMenu({ isOpen, onClose }) {
   const { data: session } = useSession();
+  const { isDarkMode } = useTheme();
 
   const handleMenuItemClick = () => {
     onClose();
@@ -139,13 +158,18 @@ export default function SlideInMenu({ isOpen, onClose }) {
 
   return (
     <>
-      <MenuOverlay isOpen={isOpen} onClick={onClose} />
-      <MenuContainer isOpen={isOpen}>
+      <MenuOverlay $isOpen={isOpen} onClick={onClose} />
+      <MenuContainer $isOpen={isOpen}>
         <CloseButton onClick={onClose} aria-label="Close menu">
           <X size={24} />
         </CloseButton>
         <MenuContent>
           <MenuTitle>Alchevita</MenuTitle>
+
+          <ThemeSection>
+            <ThemeText>{isDarkMode ? "Dark Mode" : "Light Mode"}</ThemeText>
+            <ThemeToggle />
+          </ThemeSection>
 
           {session ? (
             <MenuItem

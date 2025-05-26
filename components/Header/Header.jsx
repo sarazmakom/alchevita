@@ -16,10 +16,11 @@ const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  background-color: var(--background);
+  background-color: var(--surface);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
   z-index: 9999;
   border-bottom: 1px solid var(--text-dark);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 const MenuButton = styled.button`
@@ -33,7 +34,7 @@ const MenuButton = styled.button`
   justify-content: center;
 
   &:hover {
-    color: #666;
+    color: var(--primary);
   }
 `;
 
