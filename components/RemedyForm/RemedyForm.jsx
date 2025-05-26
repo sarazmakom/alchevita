@@ -178,17 +178,24 @@ const CustomFileButton = styled.label`
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1rem;
-  background-color: var(--background);
+  background-color: var(--surface);
   color: var(--text-dark);
   border-radius: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid var(--primary);
+  border: 1px solid var(--text-dark);
 
   &:hover {
-    background-color: #e2e8f0;
+    background-color: var(--primary);
+    color: white;
     border-color: var(--primary);
   }
+`;
+
+const FileNameText = styled.span`
+  margin-left: 1rem;
+  color: var(--text-dark);
+  transition: color 0.3s ease;
 `;
 
 const PillContainer = styled.ul`
@@ -505,9 +512,7 @@ export default function RemedyForm({ mode = "create", onSubmit, initialData }) {
           <CustomFileButton htmlFor="image-upload">
             Choose File
           </CustomFileButton>
-          {imageFile && (
-            <span style={{ marginLeft: "1rem" }}>{imageFile.name}</span>
-          )}
+          {imageFile && <FileNameText>{imageFile.name}</FileNameText>}
         </FileInputContainer>
         {(imageError || errors.image) && (
           <ErrorText>{imageError || errors.image}</ErrorText>
