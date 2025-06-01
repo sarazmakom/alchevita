@@ -58,19 +58,6 @@
 - Dark/light mode support 
 - Modular, component-level CSS
 
----
-
-## 📷 Screenshots
-
-<img width="342" alt="Screenshot 2025-05-28 at 08 55 15" src="https://github.com/user-attachments/assets/4658e145-730f-4749-9ef4-37e0f3a962ab" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 55 05" src="https://github.com/user-attachments/assets/8fa24227-86a0-4d98-99db-7531788a47c3" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 54 09" src="https://github.com/user-attachments/assets/411d8d36-1c5b-4f09-810c-58858fdc833c" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 53 51" src="https://github.com/user-attachments/assets/88db296a-5692-48ac-81f9-beb7132e8659" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 52 57" src="https://github.com/user-attachments/assets/a4a3aa56-8bfb-40c4-a6c6-7aba035f4fc7" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 52 28" src="https://github.com/user-attachments/assets/0e4d235e-b877-42c8-bc4c-65c8c041ce6d" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 52 08" src="https://github.com/user-attachments/assets/984ff4ca-5498-4e8f-88a9-3a3e6614163d" />
-<img width="342" alt="Screenshot 2025-05-28 at 08 51 16" src="https://github.com/user-attachments/assets/93ce0a2b-ccf4-4391-808d-2fc332b78dc2" />
-
 ### Local Development
 
 To work locally, please install the dependencies using `npm i` first.
